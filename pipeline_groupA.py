@@ -280,54 +280,89 @@ def run_llm_classification(df_unique, run_name):
 # QUESTION_WORDS, PATTERNS e is_question_multilingual()
 # CHAT GPT 5.1 PROMPT USADO: https://chatgpt.com/share/6931b30c-4208-8004-9e29-98037d1dc763
 # PROMPT:
-# "Please generate Python code with a set of rules allowing to identify: 
+# "Please generate Python code with a set of rules allowing to identify:
 # - keywords that typically allow to identify a sentence as a question;
-# - patterns or phrasal structures implicitly suggesting that a sentence corresponds to a question. 
+# - patterns or phrasal structures implicitly suggesting that a sentence corresponds to a question.
 # Please note that these rules should be able to identify questions in different languages,
 # including English, Arabic, French, Persian (Farsi), Turkish, Russian, Spanish, German or Dutch"
 
-QUESTION_WORDS = {
-    "en": ["what","why","how","when","where","which","who","whom","whose",
-           "is","are","am","do","does","did","can","could","should","would",
-           "may","might","will","shall","have","has","had"],
-    "es": ["qué","que","cómo","cuando","dónde","cual","cuál","quién","quien",
-           "por qué","porque?","puedo","puede","pueden","debo","debe","deben"],
-    "pt": ["o que","que","porquê","porque?","como","quando","onde","qual",
-           "quais","quem","pode","podemos","devo","deves","devemos"],
-    "fr": ["quoi","pourquoi","comment","quand","où","quel","quelle","quels",
-           "que","qui","est-ce que","peux-tu","pouvez-vous"],
-    "ar": ["ما","ماذا","كيف","لماذا","متى","أين","هل","كم"],
-    "fa": ["چی","چه","چرا","چطور","کجا","کی","آیا"],
-    "tr": ["ne","neden","nasıl","ne zaman","nerede","hangi","kim","mı","mi","mu","mü"],
-    "ur": ["کیا","کیوں","کیسے","کب","کہاں","کون","آیا"]
-}
+# 1) Interrogative keywords
+QUESTION_KEYWORDS = [
+    # English
+    "what", "when", "where", "why", "how", "who", "whom", "which",
+    "do", "did", "does", "are", "is", "can", "could", "should", "would",
 
-ALL_QUESTION_WORDS = list({kw for kws in QUESTION_WORDS.values() for kw in kws})
+    # French
+    "quoi", "quand", "où", "pourquoi", "comment", "qui", "lequel",
+    "est-ce", "peux-tu", "pourrais-tu",
 
-PATTERNS = [
-    r".*\? *$",
-    r"^(\s*)(is|are|am|do|does|did|can|could|should|would|have|has|had)\b",
-    r"^(\s*)est-ce que\b",
-    r"\b(mı|mi|mu|mü)\?$",
-    r"^(.*?)\b(há|há alguma|será que)\b",
-    r"^(.*?)\b(acaso|será que)\b",
-    r"^(\s*)آیا\b",
-    r"^(\s*)هل\b",
+    # Spanish
+    "qué", "cuándo", "dónde", "por qué", "cómo", "quién", "cuál", "puedes", "podrías",
+
+    # German
+    "was", "wann", "wo", "warum", "wie", "wer", "welche", "kann", "könnte",
+
+    # Dutch
+    "wat", "wanneer", "waar", "waarom", "hoe", "wie", "welke", "kan", "zou",
+
+    # Russian
+    "что", "когда", "где", "почему", "как", "кто", "который", "может", "могли бы",
+
+    # Arabic
+    "ماذا", "متى", "أين", "لماذا", "كيف", "من", "هل", "أيمكن",
+
+    # Persian
+    "چه", "کی", "کجا", "چرا", "چطور", "کیست", "آیا",
+
+    # Turkish
+    "ne", "ne zaman", "nerede", "neden", "nasıl", "kim", "hangi", "mı", "mi", "mu", "mü"
+]
+
+# 2) Structural patterns
+STRUCTURAL_PATTERNS = [
+    r".*\?\s*$",                                  # explicit '?'
+    r"^(can|could|should|would|do|did|does)\b",   # English inversion
+    r"^(is|are|was|were|am)\b",                   # English BE inversion
+    r".*\b(mı|mi|mu|mü)\?$",                      # Turkish question particle
+    r"^[^.!?]*\b(est-ce que)\b",                  # French
+    r"^[^.!?]*\b(هل)\b",                          # Arabic
+    r"^[^.!?]*\b(آیا)\b",                         # Persian
+]
+
+# 3) Implicit question markers
+IMPLICIT_PATTERNS = [
+    r"could you\b.*",
+    r"would you\b.*",
+    r"can you\b.*",
+    r"please explain\b.*",
+    r"i wonder if\b.*",
+    r"i would like to know\b.*"
 ]
 
 
-def is_question_multilingual(text):
-    text = (text or "").strip().lower()
+def is_question_multilingual(sentence: str) -> bool:
+    if not sentence:
+        return False
 
-    if text.endswith("?"):
+    s = sentence.strip().lower()
+
+    # Rule 1: punctuation
+    if re.search(r".*\?\s*$", s):
         return True
 
-    for kw in ALL_QUESTION_WORDS:
-        if re.search(r"\b" + re.escape(kw) + r"\b", text):
+    # Rule 2: structural patterns
+    for p in STRUCTURAL_PATTERNS:
+        if re.search(p, s):
             return True
 
-    for pattern in PATTERNS:
-        if re.search(pattern, text):
+    # Rule 3: keyword-based detection
+    for kw in QUESTION_KEYWORDS:
+        if re.search(rf"\b{re.escape(kw)}\b", s):
+            return True
+
+    # Rule 4: implicit patterns
+    for p in IMPLICIT_PATTERNS:
+        if re.search(p, s):
             return True
 
     return False

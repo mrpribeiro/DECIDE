@@ -171,12 +171,10 @@ def chunk_list(lst, n):
 
 def build_prompt_for_batch(batch):
     text = (
-        "We have extracted several queries from GoogleTrends from the following "
-        "nine countries: Algeria, Egypt, Iran, Iraq, Morocco, Pakistan, Saudi Arabia, "
-        "Turkey and the United Arab Emirates.\n\n"
-        "We want to identify which queries explicitly convey a question. "
-        "These queries can be in English, Portuguese, French, Spanish or any language "
-        "spoken in the aforementioned countries.\n\n"
+        "We have extracted several queries from GoogleTrends.\n\n"
+        "We want to identify what are the queries which explicitly convey a question. "
+        "These queries can be in different languages, including English, Arabic, "
+        "French, Persian (Farsi), Turkish, Russian, Spanish, German or Dutch.\n\n"
         "Below, you can find the list of queries.\n\n"
         "For each query, return a JSON array where each element has the form:\n"
         "{ \"query\": \"<query text>\", \"explicit_question\": \"YES\" or \"NO\" }\n\n"
@@ -189,7 +187,6 @@ def build_prompt_for_batch(batch):
         text += f"- {q}\n"
 
     return text
-
 
 # ============================================================
 # 5. FUNÇÃO PARA EXTRAIR JSON DA RESPOSTA DO LLM
@@ -281,13 +278,13 @@ def run_llm_classification(df_unique, run_name):
 # ============================================================
 
 # QUESTION_WORDS, PATTERNS e is_question_multilingual()
-# CHAT GPT 5.1 PROMPT USADO: https://chatgpt.com/share/692f15a6-b298-8004-b46d-95d5157cb5cb
+# CHAT GPT 5.1 PROMPT USADO: https://chatgpt.com/share/6931b30c-4208-8004-9e29-98037d1dc763
 # PROMPT:
-# "Please generate Python with a set of rules allowing to identify:
+# "Please generate Python code with a set of rules allowing to identify: 
 # - keywords that typically allow to identify a sentence as a question;
-# - patterns or phrasal structures implicitly suggesting that a sentence corresponds to a question.
-# Please note that these rules should be able to identify questions in English, Spanish, Portuguese, French
-# or in any language from the following countries: Algeria, Egypt, Iran, Iraq, Morocco, Pakistan, Saudi Arabia, Turkey and the United Arab Emirates."
+# - patterns or phrasal structures implicitly suggesting that a sentence corresponds to a question. 
+# Please note that these rules should be able to identify questions in different languages,
+# including English, Arabic, French, Persian (Farsi), Turkish, Russian, Spanish, German or Dutch"
 
 QUESTION_WORDS = {
     "en": ["what","why","how","when","where","which","who","whom","whose",

@@ -1,13 +1,13 @@
 
 # 📘 **Pipeline DECIDE (Classificação de Queries com LLMs)**
 
-Este repositório contém a implementação da primeira parte do trabalho DECIDE, cujo objetivo é classificar queries provenientes do Google Trends segundo o método descrito no artigo de referência (Supplement Box 2).
+Este repositório contém a implementação da primeira parte do trabalho DECIDE, cujo objetivo é classificar queries do Google Trends segundo a metodologia apresentada no artigo AIM – Artificial Intelligence Supported Development of Health Guidelines (em particular o Supplement Box 2).
 
-O pipeline aplica **três classificações por query**:
+O pipeline aplica **três classificações independentes por query**:
 
 1. **Run 1 – Classificação LLM (Prompt do Supplement Box 2A)**
 2. **Run 2 – Classificação LLM com batches reorganizados (para replicar o método do artigo)**
-3. **Classificação baseada em regras sintáticas (Supplement Box 2B)**
+3. **Classificação baseada em regras sintáticas (Supplement Box 2B expandido)**
 
 As duas primeiras utilizam um modelo LLM e a terceira utiliza heurísticas linguísticas.
 
@@ -25,7 +25,7 @@ mamba activate decide_env
 Instalar dependências:
 
 ```bash
-pip install groq pandas python-dotenv openpyxl
+pip install groq pandas python-dotenv openpyxl perplexityai
 ```
 
 ---
@@ -35,10 +35,10 @@ pip install groq pandas python-dotenv openpyxl
 Criar um ficheiro `.env` na raiz do projeto contendo:
 
 ```
-GROQ_API_KEY=INSERIR_AQUI_A_CHAVE_DA_GROQ
+PERPLEXITY_API_KEY=INSERIR_AQUI_A_CHAVE
 ```
 
-A Groq API foi usada numa fase inicial por ser gratuita e rápida. Contudo, devido ao limite diário de 100 000 tokens, pode ser necessário migrar futuramente para a API da OpenAI.
+Nota: Inicialmente testou-se Groq API por ser gratuita, mas devido ao limite diário de tokens, o pipeline foi migrado para Perplexity API, especificamente o modelo sonar, utilizado como LLM de classificação.
 
 ---
 
@@ -46,12 +46,17 @@ A Groq API foi usada numa fase inicial por ser gratuita e rápida. Contudo, devi
 
 ```
 📁 DECIDE/
- ├── pipeline_groupA.py           # pipeline completo em Python
- ├── pipeline_groupA_test.ipynb   # notebook com passos testáveis
+ ├── pipeline_groupA.py           # pipeline completo (versão final)
+ ├── pipeline_groupA_teste.ipynb  # notebook para testes passo a passo
  ├── queries_middle_east.xlsx     # dataset original
- ├── pipeline_decide.log          # ficheiro de logs (gerado automaticamente)
- ├── .env                         # chave da API (não partilhar)
+ ├── df_unique.xlsx               # queries únicas com UniqueID
+ ├── df_run1.xlsx                 # classificações da Run 1
+ ├── df_run2.xlsx                 # classificações da Run 2
+ ├── df_rules.xlsx                # classificações por regras
+ ├── queries_classificadas_COMPLETO.xlsx   # output final
+ ├── pipeline_run_YYYY-MM-DD.log  # logs gerados automaticamente
  └── README.md                    # este documento
+
 ```
 
 ---
@@ -61,7 +66,7 @@ A Groq API foi usada numa fase inicial por ser gratuita e rápida. Contudo, devi
 ### **Opção A — Script Python**
 
 ```bash
-python pipeline_decide.py
+python3 pipeline_decide.py
 ```
 
 ### **Opção B — Notebook**
@@ -95,9 +100,11 @@ e executar célula a célula para testar e ajustar parâmetros.
 
 ### ✔ **3) Run 1 — Classificação LLM**
 
-* modelo usado: **LLaMA 3.3 70B (Groq API)**
+* modelo usado: **sonar (Perplexity)**
 * batches de 50 queries
-* prompt igual ao do Supplement Box 2A (extendido)
+* prompt igual ao do Supplement Box 2A (adaptado e extendido)
+* output forçado a JSON
+* parsing robusto para lidar com respostas não formatadas
 
 ---
 
@@ -116,13 +123,11 @@ Para replicar fielmente o método do artigo:
 
 Baseada no Supplement Box 2B:
 
-* identificação de palavras interrogativas (EN, ES, PT, FR, AR, FA, TR, UR)
+* identificação de palavras interrogativas (EN, ES, PT, FR, DE, NL, RU, AR, FA, TR)
 * padrões sintáticos
 * partículas interrogativas
-* pontuação
+* detecção de pedidos implícitos
 * método totalmente determinístico
-
-Resultado guardado em `rules.xlsx`.
 
 ---
 
@@ -143,6 +148,7 @@ queries_classificadas_llm.xlsx
 contém:
 
 * Query
+* UniqueID
 * Classificação Run 1
 * Classificação Run 2
 * Classificação por Regras
@@ -151,13 +157,19 @@ E mantém as colunas originais do dataset.
 
 ---
 
-## 📊 **7. Limitações da Groq API**
+## 📊 **7. Limitações e Notas**
 
-A Groq é:
+⚠️ Limite da Perplexity API (PRO)
 
-* gratuita
-* extremamente rápida
-* compatível com modelos fortes (LLaMA 70B)
+O modelo sonar funciona bem, mas:
+* se o utilizador não tiver plano PRO, há limites fortes
+* cada batch consome tokens rapidamente
+* recomendamos correr apenas uma vez sobre o dataset final
 
-Mas possui um limite diário de **100 000 tokens**, o que pode impedir o processamento completo do dataset sem pausas.
+⚠️ JSON pode falhar quando o modelo inclui texto extra
+
+O código possui:
+* mecanismo de fallback
+* logger + exportação de respostas falhadas para failed_batch.txt
+* Isto permite depurar problemas sem interromper a execução.
 

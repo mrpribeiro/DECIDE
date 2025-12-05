@@ -116,7 +116,7 @@ def normalize_query(q):
 # 1. LER FICHEIRO EXCEL
 # ============================================================
 
-def load_queries(path="queries_middle_east_test.xlsx"):
+def load_queries(path="queries_middle_east_teste.xlsx"):
     df = pd.read_excel(path)
     # df = df.tail(100)  # PARA TESTES RÁPIDOS
 
@@ -383,7 +383,7 @@ def merge_results(df_original, df_unique, df_run1, df_run2):
 
     # Merge final com df original usando Query (agora seguro)
     df_final = df_original.merge(
-        temp[["Query", "Rules", "LLM_run1", "LLM_run2"]],
+        temp[["UniqueID","Query", "Rules", "LLM_run1", "LLM_run2"]],
         on="Query",
         how="left"
     )

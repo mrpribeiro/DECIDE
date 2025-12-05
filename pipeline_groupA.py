@@ -116,7 +116,7 @@ def normalize_query(q):
 # 1. LER FICHEIRO EXCEL
 # ============================================================
 
-def load_queries(path="queries_middle_east_teste.xlsx"):
+def load_queries(path="queries_middle_east.xlsx"):
     df = pd.read_excel(path)
     # df = df.tail(100)  # PARA TESTES RÁPIDOS
 
@@ -403,7 +403,7 @@ def main():
     logger.info("=== 2) DEDUPLICAÇÃO ===")
     df_unique = deduplicate_queries(df)
     logger.info(f"Queries únicas: {len(df_unique)}")
-    # df_unique.to_excel("df_unique.xlsx", index=False)  # TEMP
+    df_unique.to_excel("df_unique.xlsx", index=False)  # TEMP
 
     # # Criar uma amostra aleatória de n linhas (random_state para reprodutibilidade = seed, gera sempre a mesma amostra)
     # n = 246
@@ -413,23 +413,23 @@ def main():
 
     logger.info("=== 3) RUN 1 ===")
     df_run1 = run_llm_classification(df_unique, "LLM_run1")
-    df_run1.to_excel("df_run1_test.xlsx", index=False)  # TEMP
+    df_run1.to_excel("df_run1.xlsx", index=False)  # TEMP
 
     logger.info("\n=== 4) RUN 2 (com batches diferentes) ===")
     df_unique_shuffled = df_unique.sample(frac=1, random_state=None).reset_index(drop=True)  # sample() função pandas usada para escolher linhas de forma aleatória
     df_run2 = run_llm_classification(df_unique_shuffled, "LLM_run2")
-    df_run2.to_excel("df_run2_test.xlsx", index=False)  # TEMP
+    df_run2.to_excel("df_run2.xlsx", index=False)  # TEMP
 
     logger.info("=== 5) CLASSIFICAÇÃO POR REGRAS ===")
     df_unique = apply_multilingual_rules(df_unique)
-    df_unique.to_excel("df_rules_test.xlsx", index=False)  # TEMP
+    df_unique.to_excel("df_rules.xlsx", index=False)  # TEMP
 
     logger.info("=== 6) MERGE FINAL ===")
     df_final = merge_results(df, df_unique, df_run1, df_run2)
     logger.info(f"Merge final concluído: {len(df_final)} linhas totais.")
 
     logger.info("=== 7) EXPORTAR ===")
-    output = "queries_classificadas_llm_test.xlsx"
+    output = "queries_classificadas_COMPLETO.xlsx"
     df_final.to_excel(output, index=False)
     logger.info(f"Concluído! Ficheiro gravado como: {output}\n")
 

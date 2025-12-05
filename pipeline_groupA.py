@@ -1,6 +1,6 @@
-# ===============================================================
-# DECIDE – PIPELINE LLM PARA CLASSIFICAÇÃO DE QUERIES (GROQ API)
-# ===============================================================
+# ==========================================================================
+# DECIDE – PIPELINE LLM PARA CLASSIFICAÇÃO DE QUERIES (SONAR PERPLEXITY API)
+# ==========================================================================
 #
 # INSTRUÇÕES INICIAIS:
 #
@@ -14,29 +14,18 @@
 #
 #   > pip install groq pandas python-dotenv openpyxl perplexityai
 #
-# Criar um ficheiro .env na mesma pasta, contendo (seguir tutorial: https://console.groq.com/docs/quickstart):
+# Criar um ficheiro .env na mesma pasta, contendo (seguir tutorial: https://docs.perplexity.ai/getting-started/quickstart):
 #
-#   GROQ_API_KEY= A_TUA_CHAVE_AQUI
+#   PERPLEXITY_API_KEY= "A_TUA_CHAVE_AQUI"
 #
 # Este script:
 #   1) lê o ficheiro queries_middle_east.xlsx
 #   2) normaliza o texto das queries
 #   3) remove duplicados e cria UniqueID para cada query única
-#   4) faz RUN 1 e RUN 2 usando Groq API (modelo: llama-3.3-70b-versatile)
+#   4) faz RUN 1 e RUN 2 usando perplexity API (modelo: sonar)
 #   5) aplica regras multilingues baseadas no Supplement Box 2B (expandido)
 #   6) faz merge usando UniqueID (evitando problemas de inconsistências)
 #   7) exporta: queries_classificadas_llm.xlsx
-#
-# ===============================================================
-# Groq API. gratuita, extremamente rápida e suporta modelos
-# open-source com qualidade suficiente para a nossa tarefa.
-#
-# Para classificar centenas de queries em Run 1 e Run 2, a Groq oferece maior velocidade e custo zero,
-# ao contrário da OpenAI API que é paga por token. Além disso, a API da Groq tem baixa latência,
-# é fácil de integrar e fornece modelos modernos como LLaMA 3.3 70B que são mais do que adequados para
-# a classificação simples de YES/NO usada neste projeto.
-# PROBLEMA: token rate limit (limite de taxa de tokens) na Groq API.
-# ===============================================================
 
 # =======================
 # IMPORTS
@@ -50,8 +39,8 @@ import unicodedata
 import pandas as pd
 
 from dotenv import load_dotenv
-from groq import Groq
 from datetime import datetime
+from perplexity import Perplexity
 
 # ============================================================
 # LOGGING CONFIGURATION
@@ -88,22 +77,21 @@ console_handler = logging.StreamHandler()
 console_handler.setFormatter(formatter)
 logger.addHandler(console_handler)
 
-# =======================
-# 0. CONFIGURAR GROQ API
-# =======================
-
+# ============================
+# 0. CONFIGURAR PERPLEXITY API
+# ============================
 load_dotenv()
 
-api_key = os.environ.get("GROQ_API_KEY")
+api_key = os.environ.get("PERPLEXITY_API_KEY")
 if not api_key:
-    raise ValueError("Variável de ambiente GROQ_API_KEY não definida.")
+    raise ValueError("Variável de ambiente PERPLEXITY_API_KEY não definida.")
 
-client = Groq(api_key=api_key)
+client = Perplexity(api_key=api_key)
 
-MODEL_NAME = "llama-3.3-70b-versatile"
-BATCH_SIZE = 50   # número de queries enviadas por batch ao LLM
+MODEL_NAME = "sonar"   # ou "sonar-pro"
+BATCH_SIZE = 50
 
-logger.info("Ambiente carregado e cliente Groq configurado!")
+logger.info("Ambiente carregado e cliente Perplexity SDK configurado!")
 
 
 # ============================================================
@@ -128,9 +116,9 @@ def normalize_query(q):
 # 1. LER FICHEIRO EXCEL
 # ============================================================
 
-def load_queries(path="queries_middle_east.xlsx"):
+def load_queries(path="queries_middle_east_test.xlsx"):
     df = pd.read_excel(path)
-    # df = df.tail(20)  # PARA TESTES RÁPIDOS — REMOVER ESTA LINHA PARA CORRER COM O FICHEIRO COMPLETO
+    # df = df.tail(100)  # PARA TESTES RÁPIDOS
 
     if "Query" not in df.columns:
         raise ValueError("A coluna 'Query' não existe no ficheiro.")
@@ -176,7 +164,8 @@ def build_prompt_for_batch(batch):
         "These queries can be in different languages, including English, Arabic, "
         "French, Persian (Farsi), Turkish, Russian, Spanish, German or Dutch.\n\n"
         "Below, you can find the list of queries.\n\n"
-        "For each query, return a JSON array where each element has the form:\n"
+        "Return ONLY a JSON array, with no explanations or additional text. "
+        "Each element must have the form:\n"
         "{ \"query\": \"<query text>\", \"explicit_question\": \"YES\" or \"NO\" }\n\n"
         "Write \"YES\" only if the query explicitly conveys a question. "
         "Otherwise, write \"NO\".\n\n"
@@ -188,19 +177,27 @@ def build_prompt_for_batch(batch):
 
     return text
 
+
 # ============================================================
 # 5. FUNÇÃO PARA EXTRAIR JSON DA RESPOSTA DO LLM
 # ============================================================
 
 def safe_json_extract(text):
-    """
-    Extrai JSON mesmo que exista texto antes/depois do array.
-    Encontra o bloco entre '[' e ']' e tenta json.loads().
-    """
     if not text:
         return None
 
-    match = re.search(r"\[.*\]", text, re.DOTALL)
+    cleaned = text.strip()
+
+    # 1) Strip leading markdown fence like ```json
+    if cleaned.startswith("```"):
+        cleaned = re.sub(r"^```[a-zA-Z]*\s*", "", cleaned)
+
+    # 2) Strip trailing fence ```
+    if cleaned.endswith("```"):
+        cleaned = re.sub(r"\s*```$", "", cleaned)
+
+    # 3) Extract the first JSON array
+    match = re.search(r"\[.*\]", cleaned, re.DOTALL)
     if not match:
         return None
 
@@ -231,9 +228,10 @@ def classify_batch_with_llm(batch):
     raw = response.choices[0].message.content
 
     data = safe_json_extract(raw)
-
     if data is None:
-        logger.warning(f"Falha ao extrair JSON. Resposta bruta: {raw}")
+        logger.error("Falha ao extrair JSON; a guardar resposta bruta para debug.")
+        with open("failed_batch.txt", "a", encoding="utf-8") as f:
+            f.write(raw + "\n\n" + "="*80 + "\n\n")
         return []
 
     cleaned = []
@@ -405,7 +403,7 @@ def main():
     logger.info("=== 2) DEDUPLICAÇÃO ===")
     df_unique = deduplicate_queries(df)
     logger.info(f"Queries únicas: {len(df_unique)}")
-    df_unique.to_excel("df_unique.xlsx", index=False)  # TEMP
+    # df_unique.to_excel("df_unique.xlsx", index=False)  # TEMP
 
     # # Criar uma amostra aleatória de n linhas (random_state para reprodutibilidade = seed, gera sempre a mesma amostra)
     # n = 246
@@ -415,26 +413,23 @@ def main():
 
     logger.info("=== 3) RUN 1 ===")
     df_run1 = run_llm_classification(df_unique, "LLM_run1")
-    df_run1.to_excel("df_run1_int.xlsx", index=False)  # TEMP
+    df_run1.to_excel("df_run1_test.xlsx", index=False)  # TEMP
 
     logger.info("\n=== 4) RUN 2 (com batches diferentes) ===")
     df_unique_shuffled = df_unique.sample(frac=1, random_state=None).reset_index(drop=True)  # sample() função pandas usada para escolher linhas de forma aleatória
     df_run2 = run_llm_classification(df_unique_shuffled, "LLM_run2")
-
-    # logger.info("=== 4) RUN 2 ===")
-    # df_run2 = run_llm_classification(df_unique, "LLM_run2")
-    # df_run2.to_excel("df_run2_int.xlsx", index=False)  # TEMP
+    df_run2.to_excel("df_run2_test.xlsx", index=False)  # TEMP
 
     logger.info("=== 5) CLASSIFICAÇÃO POR REGRAS ===")
     df_unique = apply_multilingual_rules(df_unique)
-    df_unique.to_excel("df_rules.xlsx", index=False)  # TEMP
+    df_unique.to_excel("df_rules_test.xlsx", index=False)  # TEMP
 
     logger.info("=== 6) MERGE FINAL ===")
     df_final = merge_results(df, df_unique, df_run1, df_run2)
     logger.info(f"Merge final concluído: {len(df_final)} linhas totais.")
 
     logger.info("=== 7) EXPORTAR ===")
-    output = "queries_classificadas_llm.xlsx"
+    output = "queries_classificadas_llm_test.xlsx"
     df_final.to_excel(output, index=False)
     logger.info(f"Concluído! Ficheiro gravado como: {output}\n")
 

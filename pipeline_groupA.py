@@ -12,7 +12,7 @@
 #
 # Depois instalar os pacotes necessários:
 #
-#   > pip install groq pandas python-dotenv openpyxl
+#   > pip install groq pandas python-dotenv openpyxl perplexityai
 #
 # Criar um ficheiro .env na mesma pasta, contendo (seguir tutorial: https://console.groq.com/docs/quickstart):
 #
@@ -406,6 +406,12 @@ def main():
     df_unique = deduplicate_queries(df)
     logger.info(f"Queries únicas: {len(df_unique)}")
     df_unique.to_excel("df_unique.xlsx", index=False)  # TEMP
+
+    # # Criar uma amostra aleatória de n linhas (random_state para reprodutibilidade = seed, gera sempre a mesma amostra)
+    # n = 246
+    # df_sample = df_unique.sample(n=n, random_state=42)
+    # df_sample.to_excel("df_sample.xlsx", index=False)
+    # logger.info(f"Criada amostra aleatória de {n} queries, guardada em df_sample.xlsx")
 
     logger.info("=== 3) RUN 1 ===")
     df_run1 = run_llm_classification(df_unique, "LLM_run1")

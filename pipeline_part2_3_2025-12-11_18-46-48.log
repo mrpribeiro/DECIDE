@@ -1,0 +1,820 @@
+2025-12-11 18:46:48 | INFO | Ambiente carregado e cliente OpenAI (GPT-4o) configurado!
+2025-12-11 18:46:48 | INFO | ====================================================
+2025-12-11 18:46:48 | INFO | 🚀 Início da execução do pipeline DECIDE – PARTE 2 + 3 (GPT-4o)
+2025-12-11 18:46:48 | INFO | ====================================================
+2025-12-11 18:46:48 | INFO | === 1) A LER INPUT ===
+2025-12-11 18:46:50 | INFO | Ficheiro lido: LLM_complete_classification_PERP_GPT_GEM.xlsx com 13361 linhas.
+2025-12-11 18:46:50 | INFO | Queries únicas (por UniqueID): 2226
+2025-12-11 18:46:50 | INFO | === 3) SELECIONAR QUERIES EXPLÍCITAS ===
+2025-12-11 18:46:50 | INFO | Queries explícitas a processar (Parte 2 + 3): 371
+2025-12-11 18:46:50 | INFO | PROCESSAR UniqueID=24 | Query='antihistaminique femme enceinte'
+2025-12-11 18:46:52 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:46:52 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:46:53 | INFO | PROCESSAR UniqueID=66 | Query='ما هو الهستامين'
+2025-12-11 18:46:54 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:46:54 | INFO | PROCESSAR UniqueID=75 | Query='what is antihistamine'
+2025-12-11 18:46:55 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:46:56 | INFO | PROCESSAR UniqueID=86 | Query='side effect of antihistamine'
+2025-12-11 18:46:57 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:46:57 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:46:57 | INFO | PROCESSAR UniqueID=100 | Query='antihistamine meaning'
+2025-12-11 18:46:59 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:46:59 | INFO | PROCESSAR UniqueID=102 | Query='does antihistamine make you sleepy'
+2025-12-11 18:47:00 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:47:01 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:47:01 | INFO | PROCESSAR UniqueID=114 | Query='آنتی هیستامین چیست'
+2025-12-11 18:47:02 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:47:02 | INFO | PROCESSAR UniqueID=116 | Query='آنتی هیستامین برای چیست'
+2025-12-11 18:47:03 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:47:04 | INFO | PROCESSAR UniqueID=118 | Query='قرص آنتی هیستامین چیست'
+2025-12-11 18:47:05 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:47:05 | INFO | PROCESSAR UniqueID=119 | Query='قرص آنتی هیستامین برای چیست'
+2025-12-11 18:47:06 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:47:06 | INFO | PROCESSAR UniqueID=121 | Query='آنتی هیستامین دکونژستانت چیست'
+2025-12-11 18:47:07 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:47:08 | INFO | PROCESSAR UniqueID=122 | Query='آنتی هیستامین دکونژستانت برای چیست'
+2025-12-11 18:47:09 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:47:09 | INFO | PROCESSAR UniqueID=123 | Query='قرص آنتی هیستامین دکونژستانت چیست'
+2025-12-11 18:47:10 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:47:11 | INFO | PROCESSAR UniqueID=124 | Query='قرص آنتی هیستامین دکونژستانت برای چیست'
+2025-12-11 18:47:12 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:47:12 | INFO | PROCESSAR UniqueID=125 | Query='انتی هیستامین چیست'
+2025-12-11 18:47:13 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:47:14 | INFO | PROCESSAR UniqueID=127 | Query='انتی هیستامین برای چیه'
+2025-12-11 18:47:15 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:47:15 | INFO | PROCESSAR UniqueID=128 | Query='انتی هیستامین برای چیست'
+2025-12-11 18:47:16 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:47:16 | INFO | PROCESSAR UniqueID=135 | Query='ماهي مضادات الهستامين'
+2025-12-11 18:47:20 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:47:20 | INFO | PROCESSAR UniqueID=138 | Query='antihistaminik nedir'
+2025-12-11 18:47:21 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:47:21 | INFO | PROCESSAR UniqueID=146 | Query='antihistaminik ne demek'
+2025-12-11 18:47:22 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:47:23 | INFO | PROCESSAR UniqueID=150 | Query='antihistaminik ilaçlar ne işe yarar'
+2025-12-11 18:47:24 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:47:24 | INFO | PROCESSAR UniqueID=154 | Query='antihistaminik ilaçlar nelerdir'
+2025-12-11 18:47:38 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:47:39 | INFO | PROCESSAR UniqueID=155 | Query='antihistaminikler nedir'
+2025-12-11 18:47:40 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:47:40 | INFO | PROCESSAR UniqueID=158 | Query='kaşıntıya ne iyi gelir'
+2025-12-11 18:47:41 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:47:41 | INFO | PROCESSAR UniqueID=173 | Query='define antihistamine'
+2025-12-11 18:47:42 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:47:43 | INFO | PROCESSAR UniqueID=176 | Query='define antihistamines'
+2025-12-11 18:47:44 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:47:44 | INFO | PROCESSAR UniqueID=212 | Query='best antihistamine for allergic rhinitis'
+2025-12-11 18:47:46 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:47:46 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:47:46 | INFO | PROCESSAR UniqueID=213 | Query='ما هي مضادات الهيستامين'
+2025-12-11 18:47:48 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:47:48 | INFO | PROCESSAR UniqueID=223 | Query='антигистаминные препараты это'
+2025-12-11 18:47:49 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:47:49 | INFO | PROCESSAR UniqueID=236 | Query='آنتی هیستامین دکونژستانت برای'
+2025-12-11 18:47:51 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:47:51 | INFO | PROCESSAR UniqueID=240 | Query='آنتی هیستامین دکونژستانت برای چیه'
+2025-12-11 18:47:52 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:47:52 | INFO | PROCESSAR UniqueID=241 | Query='آنتی هیستامین دکونژستانت چیه'
+2025-12-11 18:47:53 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:47:54 | INFO | PROCESSAR UniqueID=242 | Query='انتی هیستامین دکونژستانت برای چی'
+2025-12-11 18:47:55 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:47:56 | INFO | PROCESSAR UniqueID=243 | Query='آنتی هیستامین دکونژستانت برای چی خوبه'
+2025-12-11 18:47:57 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:47:57 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:47:57 | INFO | PROCESSAR UniqueID=244 | Query='قرص ایروکاست برای چیست'
+2025-12-11 18:47:59 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:47:59 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:48:00 | INFO | PROCESSAR UniqueID=245 | Query='قرص آنتی هیستامین دکونژستانت برای چی خوبه'
+2025-12-11 18:48:01 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:48:01 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:48:02 | INFO | PROCESSAR UniqueID=249 | Query='قرص لوپرامید برای چیست'
+2025-12-11 18:48:03 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:48:03 | INFO | PROCESSAR UniqueID=250 | Query='قرص آنتی هیستامین دکونژستانت برای چیه'
+2025-12-11 18:48:04 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:48:04 | INFO | PROCESSAR UniqueID=253 | Query='قرص هیوسین برای چیست'
+2025-12-11 18:48:11 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:48:11 | INFO | PROCESSAR UniqueID=255 | Query='آنتی هیستامین برای چی خوبه'
+2025-12-11 18:48:12 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:48:13 | INFO | PROCESSAR UniqueID=259 | Query='antihistamine meaning in urdu'
+2025-12-11 18:48:14 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:48:14 | INFO | PROCESSAR UniqueID=260 | Query='histamine meaning'
+2025-12-11 18:48:15 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:48:16 | INFO | PROCESSAR UniqueID=266 | Query='antihistamine for bee sting'
+2025-12-11 18:48:17 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:48:17 | INFO | PROCESSAR UniqueID=267 | Query='best antihistamine for vertigo'
+2025-12-11 18:48:19 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:48:19 | INFO | PROCESSAR UniqueID=274 | Query='ماهو الهيستامين'
+2025-12-11 18:48:20 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:48:21 | INFO | PROCESSAR UniqueID=289 | Query='ما هو الهيستامين'
+2025-12-11 18:48:21 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:48:22 | INFO | PROCESSAR UniqueID=306 | Query='best antihistamine for runny nose'
+2025-12-11 18:48:23 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:48:24 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:48:24 | INFO | PROCESSAR UniqueID=320 | Query='قرص انتی هیستامین برای چیه'
+2025-12-11 18:48:25 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:48:26 | INFO | PROCESSAR UniqueID=321 | Query='انتی هیستامین دکونژستانت چیه'
+2025-12-11 18:48:29 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:48:29 | INFO | PROCESSAR UniqueID=322 | Query='آنتی هیستامین دکونژستانت هر چند ساعت'
+2025-12-11 18:48:30 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:48:31 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:48:31 | INFO | PROCESSAR UniqueID=323 | Query='انتی هیستامین دکونژستانت برای چیه'
+2025-12-11 18:48:32 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:48:32 | INFO | PROCESSAR UniqueID=329 | Query='آنتی هیستامین دکونژستانت قرص چیست'
+2025-12-11 18:48:34 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:48:34 | INFO | PROCESSAR UniqueID=333 | Query='geniz akıntısına ne iyi gelir'
+2025-12-11 18:48:35 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:48:35 | INFO | PROCESSAR UniqueID=338 | Query='what is anti histamine'
+2025-12-11 18:48:36 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:48:37 | INFO | PROCESSAR UniqueID=346 | Query='cetirizine vs loratadine'
+2025-12-11 18:48:38 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:48:38 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:48:38 | INFO | PROCESSAR UniqueID=363 | Query='can i take antihistamine after covid vaccine'
+2025-12-11 18:48:40 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:48:40 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:48:41 | INFO | PROCESSAR UniqueID=366 | Query='antihistamines meaning'
+2025-12-11 18:48:42 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:48:42 | INFO | PROCESSAR UniqueID=374 | Query='قرص نئوتادین برای چیست'
+2025-12-11 18:48:43 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:48:43 | INFO | PROCESSAR UniqueID=376 | Query='قرص برای آبریزش بینی'
+2025-12-11 18:48:45 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:48:45 | INFO | PROCESSAR UniqueID=377 | Query='فاموتیدین چیست'
+2025-12-11 18:48:46 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:48:47 | INFO | PROCESSAR UniqueID=382 | Query='ürtiker nasıl geçer'
+2025-12-11 18:48:48 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:48:48 | INFO | PROCESSAR UniqueID=419 | Query='kurdeşen nedir'
+2025-12-11 18:48:49 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:48:49 | INFO | PROCESSAR UniqueID=425 | Query='antihistamine means'
+2025-12-11 18:48:51 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:48:51 | INFO | PROCESSAR UniqueID=430 | Query='best antihistamine for skin allergy'
+2025-12-11 18:48:52 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:48:53 | INFO | PROCESSAR UniqueID=435 | Query='هیستامین چیست'
+2025-12-11 18:48:54 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:48:54 | INFO | PROCESSAR UniqueID=442 | Query='آنتی هیستامین دکونژستان برای چیست'
+2025-12-11 18:48:56 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:48:56 | INFO | PROCESSAR UniqueID=443 | Query='آنتی هیستامین دکونژستان چیست'
+2025-12-11 18:48:58 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:48:58 | INFO | PROCESSAR UniqueID=449 | Query='antihistaminique définition'
+2025-12-11 18:48:59 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:48:59 | INFO | PROCESSAR UniqueID=451 | Query='how many antihistamines can i take'
+2025-12-11 18:49:03 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:49:04 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:49:04 | INFO | PROCESSAR UniqueID=454 | Query='سیتریزین چیست'
+2025-12-11 18:49:05 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:49:06 | INFO | PROCESSAR UniqueID=464 | Query='antihistamin nedir'
+2025-12-11 18:49:07 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:49:07 | INFO | PROCESSAR UniqueID=484 | Query='kortikosteroid nedir'
+2025-12-11 18:49:08 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:49:09 | INFO | PROCESSAR UniqueID=508 | Query='meaning of antihistamine'
+2025-12-11 18:49:09 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:49:10 | INFO | PROCESSAR UniqueID=536 | Query='ما هو احتقان الانف'
+2025-12-11 18:49:11 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:49:11 | INFO | PROCESSAR UniqueID=544 | Query='احتقان چیست'
+2025-12-11 18:49:12 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:49:12 | INFO | PROCESSAR UniqueID=546 | Query='dekonjestan nedir'
+2025-12-11 18:49:13 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:49:14 | INFO | PROCESSAR UniqueID=547 | Query='dekonjestan ne demek'
+2025-12-11 18:49:15 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:49:15 | INFO | PROCESSAR UniqueID=554 | Query='nazal dekonjestan nedir'
+2025-12-11 18:49:16 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:49:16 | INFO | PROCESSAR UniqueID=557 | Query='congestion meaning'
+2025-12-11 18:49:17 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:49:18 | INFO | PROCESSAR UniqueID=561 | Query='decongestant meaning'
+2025-12-11 18:49:18 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:49:19 | INFO | PROCESSAR UniqueID=566 | Query='decongestant meaning in urdu'
+2025-12-11 18:49:20 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:49:20 | INFO | PROCESSAR UniqueID=570 | Query='التخلص من احتقان الانف'
+2025-12-11 18:49:21 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:49:22 | INFO | PROCESSAR UniqueID=574 | Query='معنی احتقان'
+2025-12-11 18:49:23 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:49:23 | INFO | PROCESSAR UniqueID=575 | Query='احتقان یعنی چه'
+2025-12-11 18:49:24 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:49:24 | INFO | PROCESSAR UniqueID=576 | Query='ضد احتقان یعنی چه'
+2025-12-11 18:49:26 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:49:26 | INFO | PROCESSAR UniqueID=591 | Query='احتقان بینی چیست'
+2025-12-11 18:49:27 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:49:27 | INFO | PROCESSAR UniqueID=593 | Query='dekonjestan nedir tıp'
+2025-12-11 18:49:28 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:49:28 | INFO | PROCESSAR UniqueID=605 | Query='nasal decongestant meaning'
+2025-12-11 18:49:30 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:49:30 | INFO | PROCESSAR UniqueID=620 | Query='بخاخ الانف يفطر'
+2025-12-11 18:49:31 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:49:31 | INFO | PROCESSAR UniqueID=621 | Query='هل بخاخ الانف يفطر'
+2025-12-11 18:49:32 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:49:33 | INFO | PROCESSAR UniqueID=636 | Query='بخاخ الانف يفطر الصائم'
+2025-12-11 18:49:34 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:49:34 | INFO | PROCESSAR UniqueID=680 | Query='اسپری بینی برای سینوزیت'
+2025-12-11 18:49:35 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:49:36 | INFO | PROCESSAR UniqueID=682 | Query='burun spreyi fiyatı'
+2025-12-11 18:49:37 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:49:37 | INFO | PROCESSAR UniqueID=686 | Query='burun spreyi fiyat'
+2025-12-11 18:49:38 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:49:38 | INFO | PROCESSAR UniqueID=693 | Query='burun spreyi orucu bozar mı'
+2025-12-11 18:49:41 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:49:41 | INFO | PROCESSAR UniqueID=694 | Query='hamilelikte burun spreyi'
+2025-12-11 18:49:42 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:49:42 | INFO | PROCESSAR UniqueID=701 | Query='burun spreyi orucu bozarmi'
+2025-12-11 18:49:43 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:49:44 | INFO | PROCESSAR UniqueID=705 | Query='otrivine burun spreyi ne kadar'
+2025-12-11 18:49:45 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:49:45 | INFO | PROCESSAR UniqueID=706 | Query='rhinfant burun spreyi nasıl kullanılır'
+2025-12-11 18:49:46 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:49:48 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:49:48 | INFO | PROCESSAR UniqueID=708 | Query='kortizon nedir'
+2025-12-11 18:49:49 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:49:50 | INFO | PROCESSAR UniqueID=717 | Query='how to use nasal spray'
+2025-12-11 18:49:51 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:49:51 | INFO | PROCESSAR UniqueID=734 | Query='هل يفطر بخاخ الانف'
+2025-12-11 18:49:52 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:49:52 | INFO | PROCESSAR UniqueID=742 | Query='هل بخاخ الانف يفطر الصائم'
+2025-12-11 18:49:55 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:49:56 | INFO | PROCESSAR UniqueID=750 | Query='flixonase nasal spray side effects'
+2025-12-11 18:49:57 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:49:57 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:49:57 | INFO | PROCESSAR UniqueID=779 | Query='oruçluyken burun spreyi sıkılır mı'
+2025-12-11 18:49:58 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:49:59 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:49:59 | INFO | PROCESSAR UniqueID=782 | Query='rhinfant burun spreyi ne kadar'
+2025-12-11 18:50:01 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:50:01 | INFO | PROCESSAR UniqueID=784 | Query='iliadin burun spreyi nedir'
+2025-12-11 18:50:03 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:50:03 | INFO | PROCESSAR UniqueID=785 | Query='otrivine burun spreyi fiyat'
+2025-12-11 18:50:12 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:50:13 | INFO | PROCESSAR UniqueID=786 | Query='otrivine fiyat'
+2025-12-11 18:50:15 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:50:15 | INFO | PROCESSAR UniqueID=793 | Query='avamys nasal spray price in pakistan'
+2025-12-11 18:50:17 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:50:17 | INFO | PROCESSAR UniqueID=809 | Query='rinoclenil 100 nasal spray uses'
+2025-12-11 18:50:18 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:50:19 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:50:19 | INFO | PROCESSAR UniqueID=822 | Query='انواع اسپری بینی'
+2025-12-11 18:50:20 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:50:20 | INFO | PROCESSAR UniqueID=824 | Query='اسپری بینی فلوتیکومکس برای چیست'
+2025-12-11 18:50:22 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:50:22 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:50:23 | INFO | PROCESSAR UniqueID=837 | Query='otrinatura burun spreyi fiyat'
+2025-12-11 18:50:24 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:50:24 | INFO | PROCESSAR UniqueID=839 | Query='burun spreyi orucu bozar mı fetva meclisi'
+2025-12-11 18:50:25 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:50:26 | INFO | PROCESSAR UniqueID=843 | Query='xynosine nasal spray uses'
+2025-12-11 18:50:27 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:50:28 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:50:28 | INFO | PROCESSAR UniqueID=844 | Query='avamys nasal spray used for'
+2025-12-11 18:50:30 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:50:31 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:50:31 | INFO | PROCESSAR UniqueID=879 | Query='اسپری بینی فلازون برای چیست'
+2025-12-11 18:50:33 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:50:34 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:50:34 | INFO | PROCESSAR UniqueID=880 | Query='آیا اسپری بینی روزه را باطل میکند'
+2025-12-11 18:50:35 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:50:35 | INFO | PROCESSAR UniqueID=890 | Query='burun spreyi oruç bozar mı'
+2025-12-11 18:50:36 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:50:36 | INFO | PROCESSAR UniqueID=895 | Query='burun spreyi orucu bozar mı diyanet'
+2025-12-11 18:50:37 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:50:38 | INFO | PROCESSAR UniqueID=898 | Query='iliadin burun spreyi ne işe yarar'
+2025-12-11 18:50:39 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:50:39 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:50:40 | INFO | PROCESSAR UniqueID=906 | Query='xynosine nasal spray use'
+2025-12-11 18:50:41 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:50:41 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:50:42 | INFO | PROCESSAR UniqueID=907 | Query='ticovate nasal spray uses'
+2025-12-11 18:50:43 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:50:44 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:50:44 | INFO | PROCESSAR UniqueID=909 | Query='avamys nasal spray uses'
+2025-12-11 18:50:46 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:50:47 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:50:47 | INFO | PROCESSAR UniqueID=910 | Query='xynosine nasal drops uses'
+2025-12-11 18:50:48 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:50:49 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:50:49 | INFO | PROCESSAR UniqueID=914 | Query='rhinosone nasal spray uses'
+2025-12-11 18:50:50 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:50:51 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:50:51 | INFO | PROCESSAR UniqueID=915 | Query='avamys nasal spray price'
+2025-12-11 18:50:52 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:50:53 | INFO | PROCESSAR UniqueID=930 | Query='tabunex nasal spray uses'
+2025-12-11 18:50:54 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:50:54 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:50:55 | INFO | PROCESSAR UniqueID=932 | Query='otrivin nasal spray price'
+2025-12-11 18:50:56 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:50:56 | INFO | PROCESSAR UniqueID=939 | Query='اسپری بینی رستانکس برای چیست'
+2025-12-11 18:50:58 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:50:59 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:50:59 | INFO | PROCESSAR UniqueID=940 | Query='اسپری بینی مومتومکس چیست'
+2025-12-11 18:51:01 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:51:01 | INFO | PROCESSAR UniqueID=942 | Query='اسپری بینی کلداماریس قیمت'
+2025-12-11 18:51:02 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:51:02 | INFO | PROCESSAR UniqueID=943 | Query='اسپری بینی مومتومکس برای چیست'
+2025-12-11 18:51:04 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:51:04 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:51:05 | INFO | PROCESSAR UniqueID=950 | Query='nazofix burun spreyi ne işe yarar'
+2025-12-11 18:51:06 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:51:07 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:51:07 | INFO | PROCESSAR UniqueID=955 | Query='hamileler burun spreyi kullanabilir mi'
+2025-12-11 18:51:08 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:51:08 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:51:09 | INFO | PROCESSAR UniqueID=972 | Query='xynosine nasal spray uses in urdu'
+2025-12-11 18:51:11 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:51:11 | INFO | PROCESSAR UniqueID=978 | Query='هل بخاخات الانف تفطر'
+2025-12-11 18:51:12 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:51:12 | INFO | PROCESSAR UniqueID=987 | Query='how to use otrivin nasal spray'
+2025-12-11 18:51:13 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:51:14 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:51:14 | INFO | PROCESSAR UniqueID=991 | Query='otrivin nasal spray uses'
+2025-12-11 18:51:15 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:51:16 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:51:16 | INFO | PROCESSAR UniqueID=1008 | Query='اسپری بینی مومتازون برای چیست'
+2025-12-11 18:51:17 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:51:18 | INFO | PROCESSAR UniqueID=1009 | Query='اسپری بینی بکلومتازون برای چیست'
+2025-12-11 18:51:19 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:51:19 | INFO | PROCESSAR UniqueID=1011 | Query='فلومیست ۵۰ اسپری بینی برای چیست'
+2025-12-11 18:51:21 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:51:22 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:51:22 | INFO | PROCESSAR UniqueID=1012 | Query='اسپری بینی راینوپ برای چیست'
+2025-12-11 18:51:23 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:51:24 | INFO | PROCESSAR UniqueID=1026 | Query='rinoclenil sprey nedir'
+2025-12-11 18:51:25 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:51:25 | INFO | PROCESSAR UniqueID=1030 | Query='buruna sprey sıkmak orucu bozar mı'
+2025-12-11 18:51:26 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:51:26 | INFO | PROCESSAR UniqueID=1031 | Query='risonel burun spreyi ne işe yarar'
+2025-12-11 18:51:27 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:51:27 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:51:28 | INFO | PROCESSAR UniqueID=1036 | Query='beklomil sprey nedir'
+2025-12-11 18:51:29 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:51:29 | INFO | PROCESSAR UniqueID=1040 | Query='iliadin sprey ne için kullanılır'
+2025-12-11 18:51:31 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:51:32 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:51:32 | INFO | PROCESSAR UniqueID=1041 | Query='iliadin sprey nedir'
+2025-12-11 18:51:33 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:51:33 | INFO | PROCESSAR UniqueID=1043 | Query='iliadin sprey ne işe yarar'
+2025-12-11 18:51:34 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:51:35 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:51:35 | INFO | PROCESSAR UniqueID=1044 | Query='iliadin nedir'
+2025-12-11 18:51:37 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:51:37 | INFO | PROCESSAR UniqueID=1053 | Query='what is sinus'
+2025-12-11 18:51:38 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:51:38 | INFO | PROCESSAR UniqueID=1059 | Query='هل قطرة الأنف تفطر'
+2025-12-11 18:51:40 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:51:40 | INFO | PROCESSAR UniqueID=1062 | Query='قطرة الانف تفطر'
+2025-12-11 18:51:41 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:51:42 | INFO | PROCESSAR UniqueID=1067 | Query='هل قطرة الأنف تفطر الصائم'
+2025-12-11 18:51:43 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:51:43 | INFO | PROCESSAR UniqueID=1070 | Query='هل قطرة الانف تفطر'
+2025-12-11 18:51:44 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:51:44 | INFO | PROCESSAR UniqueID=1071 | Query='حكم قطرة الانف للصائم'
+2025-12-11 18:51:45 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:51:46 | INFO | PROCESSAR UniqueID=1073 | Query='هل قطرة الأنف تفطر الصائم دار الإفتاء'
+2025-12-11 18:51:47 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:51:48 | INFO | PROCESSAR UniqueID=1074 | Query='هل قطرة العين تفطر'
+2025-12-11 18:51:48 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:51:49 | INFO | PROCESSAR UniqueID=1080 | Query='قطرة الأنف تفطر الصائم'
+2025-12-11 18:51:50 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:51:50 | INFO | PROCESSAR UniqueID=1082 | Query='حكم بخاخ الانف للصائم'
+2025-12-11 18:51:51 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:51:51 | INFO | PROCESSAR UniqueID=1088 | Query='decozal nasal spray uses'
+2025-12-11 18:51:53 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:51:53 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:51:54 | INFO | PROCESSAR UniqueID=1108 | Query='burun spreyi ne işe yarar'
+2025-12-11 18:51:55 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:51:55 | INFO | PROCESSAR UniqueID=1122 | Query='otrivine burun spreyi bebeklerde kullanılır mi'
+2025-12-11 18:51:58 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:51:59 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:51:59 | INFO | PROCESSAR UniqueID=1123 | Query='iliadin burun spreyi kaç yaş'
+2025-12-11 18:52:00 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:52:00 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:52:01 | INFO | PROCESSAR UniqueID=1124 | Query='rhinfant burun spreyi kaç yaş'
+2025-12-11 18:52:02 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:52:02 | INFO | PROCESSAR UniqueID=1127 | Query='rhinfant burun spreyi ne işe yarar'
+2025-12-11 18:52:04 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:52:04 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:52:05 | INFO | PROCESSAR UniqueID=1128 | Query='nazoster burun spreyi ne işe yarar'
+2025-12-11 18:52:06 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:52:06 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:52:07 | INFO | PROCESSAR UniqueID=1129 | Query='mometix burun spreyi ne işe yarar'
+2025-12-11 18:52:08 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:52:08 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:52:09 | INFO | PROCESSAR UniqueID=1131 | Query='iliadin burun spreyi nasıl kullanılır'
+2025-12-11 18:52:10 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:52:10 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:52:11 | INFO | PROCESSAR UniqueID=1132 | Query='nazetin burun spreyi ne işe yarar'
+2025-12-11 18:52:12 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:52:12 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:52:13 | INFO | PROCESSAR UniqueID=1133 | Query='burun akıntısına ne iyi gelir'
+2025-12-11 18:52:14 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:52:14 | INFO | PROCESSAR UniqueID=1135 | Query='nasal drops uses'
+2025-12-11 18:52:15 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:52:15 | INFO | PROCESSAR UniqueID=1156 | Query='بخاخ الانف يفطر ام لا'
+2025-12-11 18:52:17 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:52:17 | INFO | PROCESSAR UniqueID=1159 | Query='بخاخ الانف يفطر الصائم ام لا'
+2025-12-11 18:52:18 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:52:18 | INFO | PROCESSAR UniqueID=1167 | Query='أفضل بخاخ لانسداد الأنف'
+2025-12-11 18:52:20 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:52:20 | INFO | PROCESSAR UniqueID=1172 | Query='best nasal spray for sinusitis'
+2025-12-11 18:52:21 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:52:21 | INFO | PROCESSAR UniqueID=1176 | Query='dymista nasal spray uses'
+2025-12-11 18:52:23 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:52:24 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:52:24 | INFO | PROCESSAR UniqueID=1201 | Query='oxynaz burun spreyi ne işe yarar'
+2025-12-11 18:52:25 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:52:26 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:52:26 | INFO | PROCESSAR UniqueID=1206 | Query='göz damlası orucu bozar mı'
+2025-12-11 18:52:27 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:52:28 | INFO | PROCESSAR UniqueID=1208 | Query='burun damlası orucu bozar mı'
+2025-12-11 18:52:29 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:52:29 | INFO | PROCESSAR UniqueID=1209 | Query='orucluyken burun spreyi kullanılır mi'
+2025-12-11 18:52:30 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:52:31 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:52:31 | INFO | PROCESSAR UniqueID=1210 | Query='nazal sprey nedir'
+2025-12-11 18:52:32 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:52:33 | INFO | PROCESSAR UniqueID=1211 | Query='burun spreyi sıkmak orucu bozar mı'
+2025-12-11 18:52:33 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:52:34 | INFO | PROCESSAR UniqueID=1212 | Query='dalman burun spreyi ne işe yarar'
+2025-12-11 18:52:35 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:52:35 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:52:35 | INFO | PROCESSAR UniqueID=1226 | Query='هل بخاخ الأنف يفطر دار الإفتاء'
+2025-12-11 18:52:37 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:52:37 | INFO | PROCESSAR UniqueID=1239 | Query='بخاخ الانف هل يفطر'
+2025-12-11 18:52:38 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:52:38 | INFO | PROCESSAR UniqueID=1242 | Query='does nasal spray break fast'
+2025-12-11 18:52:41 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:52:41 | INFO | PROCESSAR UniqueID=1243 | Query='هل استخدام بخاخ الانف يفطر'
+2025-12-11 18:52:42 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:52:42 | INFO | PROCESSAR UniqueID=1252 | Query='otrivin nasal spray side effects'
+2025-12-11 18:52:43 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:52:43 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:52:44 | INFO | PROCESSAR UniqueID=1274 | Query='burun spreyi nasıl kullanılır'
+2025-12-11 18:52:45 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:52:45 | INFO | PROCESSAR UniqueID=1278 | Query='nasovine duo burun spreyi ne işe yarar'
+2025-12-11 18:52:46 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:52:47 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:52:47 | INFO | PROCESSAR UniqueID=1282 | Query='otrivine sprey kaç yaş için'
+2025-12-11 18:52:48 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:52:49 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:52:49 | INFO | PROCESSAR UniqueID=1285 | Query='oruçluyken burun spreyi kullanılır mı'
+2025-12-11 18:52:51 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:52:52 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:52:52 | INFO | PROCESSAR UniqueID=1286 | Query='burun spreyi nasıl sıkılır'
+2025-12-11 18:52:53 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:52:53 | INFO | PROCESSAR UniqueID=1287 | Query='nasovine burun spreyi ne işe yarar'
+2025-12-11 18:52:55 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:52:56 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:52:56 | INFO | PROCESSAR UniqueID=1290 | Query='beklomil burun spreyi ne işe yarar'
+2025-12-11 18:52:57 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:52:58 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:52:58 | INFO | PROCESSAR UniqueID=1291 | Query='burun spreyi orucu bozar mı sorularla islamiyet'
+2025-12-11 18:52:59 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:53:00 | INFO | PROCESSAR UniqueID=1292 | Query='beclosp burun spreyi ne işe yarar'
+2025-12-11 18:53:01 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:53:01 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:53:01 | INFO | PROCESSAR UniqueID=1293 | Query='n cort burun spreyi ne işe yarar'
+2025-12-11 18:53:03 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:53:04 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:53:04 | INFO | PROCESSAR UniqueID=1294 | Query='nasovine burun spreyi kaç yaş için'
+2025-12-11 18:53:05 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:53:06 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:53:06 | INFO | PROCESSAR UniqueID=1295 | Query='nazetin burun spreyi nedir'
+2025-12-11 18:53:07 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:53:07 | INFO | PROCESSAR UniqueID=1296 | Query='mometix aq burun spreyi ne işe yarar'
+2025-12-11 18:53:09 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:53:09 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:53:10 | INFO | PROCESSAR UniqueID=1322 | Query='nasonex nasal spray uses'
+2025-12-11 18:53:11 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:53:11 | INFO | PROCESSAR UniqueID=1332 | Query='alerjik rinit nedir'
+2025-12-11 18:53:12 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:53:12 | INFO | PROCESSAR UniqueID=1334 | Query='burun spreyi kullanmak orucu bozar mı'
+2025-12-11 18:53:13 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:53:14 | INFO | PROCESSAR UniqueID=1346 | Query='فوائد حبوب الطلع'
+2025-12-11 18:53:15 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:53:15 | INFO | PROCESSAR UniqueID=1348 | Query='فوائد حبوب اللقاح'
+2025-12-11 18:53:16 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:53:16 | INFO | PROCESSAR UniqueID=1355 | Query='pollen bienfaits'
+2025-12-11 18:53:17 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:53:18 | INFO | PROCESSAR UniqueID=1381 | Query='ماهي حبوب اللقاح'
+2025-12-11 18:53:19 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:53:19 | INFO | PROCESSAR UniqueID=1385 | Query='ماهي فوائد حبوب اللقاح'
+2025-12-11 18:53:20 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:53:20 | INFO | PROCESSAR UniqueID=1396 | Query='pollen meaning'
+2025-12-11 18:53:21 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:53:22 | INFO | PROCESSAR UniqueID=1397 | Query='what is pollen'
+2025-12-11 18:53:23 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:53:23 | INFO | PROCESSAR UniqueID=1413 | Query='گرده گل چیست'
+2025-12-11 18:53:24 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:53:24 | INFO | PROCESSAR UniqueID=1420 | Query='طریقه مصرف گرده گل'
+2025-12-11 18:53:25 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:53:25 | INFO | PROCESSAR UniqueID=1423 | Query='polen alerjisine ne iyi gelir'
+2025-12-11 18:53:26 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:53:27 | INFO | PROCESSAR UniqueID=1424 | Query='polen alerjisi belirtileri'
+2025-12-11 18:53:27 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:53:28 | INFO | PROCESSAR UniqueID=1429 | Query='طريقة استعمال حبوب اللقاح مع العسل'
+2025-12-11 18:53:28 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:53:29 | INFO | PROCESSAR UniqueID=1430 | Query='طريقة استعمال حبوب اللقاح'
+2025-12-11 18:53:30 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:53:30 | INFO | PROCESSAR UniqueID=1432 | Query='فوائد حبوب اللقاح للاطفال'
+2025-12-11 18:53:31 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:53:31 | INFO | PROCESSAR UniqueID=1433 | Query='فوائد حبوب اللقاح مع العسل للرجال'
+2025-12-11 18:53:32 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:53:33 | INFO | PROCESSAR UniqueID=1435 | Query='فوايد حبوب اللقاح'
+2025-12-11 18:53:34 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:53:34 | INFO | PROCESSAR UniqueID=1438 | Query='كيفية استعمال حبوب اللقاح'
+2025-12-11 18:53:35 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:53:35 | INFO | PROCESSAR UniqueID=1440 | Query='طريقة استخدام حبوب اللقاح'
+2025-12-11 18:53:39 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:53:39 | INFO | PROCESSAR UniqueID=1450 | Query='اي اعضاء الزهرة ينتج حبوب اللقاح'
+2025-12-11 18:53:40 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:53:40 | INFO | PROCESSAR UniqueID=1452 | Query='pollen معنى'
+2025-12-11 18:53:42 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:53:42 | INFO | PROCESSAR UniqueID=1454 | Query='هل حبوب اللقاح تزيد الوزن'
+2025-12-11 18:53:43 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:53:43 | INFO | PROCESSAR UniqueID=1456 | Query='چه جانورانی گرده افشانی می کنند'
+2025-12-11 18:53:44 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:53:44 | INFO | PROCESSAR UniqueID=1460 | Query='قیمت گرده گل'
+2025-12-11 18:53:46 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:53:46 | INFO | PROCESSAR UniqueID=1461 | Query='گرده افشانی چیست'
+2025-12-11 18:53:47 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:53:48 | INFO | PROCESSAR UniqueID=1465 | Query='زنبور عسل چگونه به گرده افشانی کمک میکند'
+2025-12-11 18:53:48 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:53:49 | INFO | PROCESSAR UniqueID=1466 | Query='زنبورعسل چگونه به گرده افشانی کمک می کند'
+2025-12-11 18:53:50 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:53:50 | INFO | PROCESSAR UniqueID=1467 | Query='زنبور عسل چگونه به گرده افشانی کمک می کند'
+2025-12-11 18:53:51 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:53:51 | INFO | PROCESSAR UniqueID=1473 | Query='pollen meaning in urdu'
+2025-12-11 18:53:53 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:53:53 | INFO | PROCESSAR UniqueID=1478 | Query='meaning of pollen'
+2025-12-11 18:53:54 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:53:54 | INFO | PROCESSAR UniqueID=1485 | Query='pollen grain meaning in urdu'
+2025-12-11 18:53:55 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:53:55 | INFO | PROCESSAR UniqueID=1494 | Query='كيفية استعمال حبوب اللقاح لزيادة الوزن'
+2025-12-11 18:53:56 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:53:57 | INFO | PROCESSAR UniqueID=1497 | Query='ما هي حبوب اللقاح'
+2025-12-11 18:53:58 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:53:58 | INFO | PROCESSAR UniqueID=1506 | Query='طرز تهیه گرده'
+2025-12-11 18:53:59 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:53:59 | INFO | PROCESSAR UniqueID=1508 | Query='معنی گرده'
+2025-12-11 18:54:01 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:54:01 | INFO | PROCESSAR UniqueID=1511 | Query='pollen count in rawalpindi'
+2025-12-11 18:54:02 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:54:02 | INFO | PROCESSAR UniqueID=1512 | Query='pollen allergy meaning in urdu'
+2025-12-11 18:54:03 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:54:04 | INFO | PROCESSAR UniqueID=1513 | Query='what is pollen grain'
+2025-12-11 18:54:05 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:54:05 | INFO | PROCESSAR UniqueID=1518 | Query='حبوب اللقاح بالفرنسية'
+2025-12-11 18:54:06 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:54:06 | INFO | PROCESSAR UniqueID=1530 | Query='گرده چیست'
+2025-12-11 18:54:07 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:54:08 | INFO | PROCESSAR UniqueID=1532 | Query='خواص گرده عسل'
+2025-12-11 18:54:09 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:54:09 | INFO | PROCESSAR UniqueID=1538 | Query='زنبورعسل چگونه به گرده افشانی کمک میکند'
+2025-12-11 18:54:10 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:54:10 | INFO | PROCESSAR UniqueID=1554 | Query='polen nasıl tüketilir'
+2025-12-11 18:54:11 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:54:12 | INFO | PROCESSAR UniqueID=1557 | Query='arı sütü faydaları'
+2025-12-11 18:54:13 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:54:13 | INFO | PROCESSAR UniqueID=1559 | Query='polen fiyatı'
+2025-12-11 18:54:14 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:54:15 | INFO | PROCESSAR UniqueID=1565 | Query='erkenci kuş polen kim'
+2025-12-11 18:54:16 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:54:16 | INFO | PROCESSAR UniqueID=1576 | Query='pollinisation définition'
+2025-12-11 18:54:20 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:54:20 | INFO | PROCESSAR UniqueID=1583 | Query='عملية انتقال حبوب اللقاح من المتك الى الميسم يسمى'
+2025-12-11 18:54:21 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:54:21 | INFO | PROCESSAR UniqueID=1584 | Query='فوائد حبوب اللقاح مع العسل للنساء'
+2025-12-11 18:54:24 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:54:25 | INFO | PROCESSAR UniqueID=1585 | Query='ما المصطلح المناسب لوصف دور النحلة في جمع حبوب اللقاح'
+2025-12-11 18:54:26 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:54:26 | INFO | PROCESSAR UniqueID=1590 | Query='ژل رویال چیست'
+2025-12-11 18:54:27 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:54:27 | INFO | PROCESSAR UniqueID=1602 | Query='poleni kimler kullanamaz'
+2025-12-11 18:54:29 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:54:29 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:54:29 | INFO | PROCESSAR UniqueID=1611 | Query='polen nasıl kullanılır'
+2025-12-11 18:54:30 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:54:31 | INFO | PROCESSAR UniqueID=1613 | Query='كيفية استعمال حبوب الطلع'
+2025-12-11 18:54:32 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:54:32 | INFO | PROCESSAR UniqueID=1615 | Query='what is pollination'
+2025-12-11 18:54:37 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:54:37 | INFO | PROCESSAR UniqueID=1619 | Query='arı sütü polen faydaları'
+2025-12-11 18:54:38 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:54:38 | INFO | PROCESSAR UniqueID=1626 | Query='طريقة استخدام حبوب اللقاح للرجال'
+2025-12-11 18:54:39 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:54:39 | INFO | PROCESSAR UniqueID=1643 | Query='كيفية تناول حبوب اللقاح'
+2025-12-11 18:54:41 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:54:41 | INFO | PROCESSAR UniqueID=1648 | Query='فوائد الحلبة'
+2025-12-11 18:54:43 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:54:43 | INFO | PROCESSAR UniqueID=1649 | Query='what is bee pollen'
+2025-12-11 18:54:44 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:54:44 | INFO | PROCESSAR UniqueID=1652 | Query='how to eat bee pollen'
+2025-12-11 18:54:45 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:54:45 | INFO | PROCESSAR UniqueID=1654 | Query='bee pollen benefits for male'
+2025-12-11 18:54:46 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:54:47 | INFO | PROCESSAR UniqueID=1657 | Query='does bee pollen increase breast size'
+2025-12-11 18:54:48 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:54:48 | INFO | PROCESSAR UniqueID=1659 | Query='in which part of a flower is pollen produced'
+2025-12-11 18:54:49 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:54:49 | INFO | PROCESSAR UniqueID=1666 | Query='علاج حساسية الانف بالاعشاب'
+2025-12-11 18:54:50 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:54:51 | INFO | PROCESSAR UniqueID=1692 | Query='ماهو علاج حساسية الانف'
+2025-12-11 18:54:52 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:54:52 | INFO | PROCESSAR UniqueID=1705 | Query='hay fever means'
+2025-12-11 18:54:53 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:54:53 | INFO | PROCESSAR UniqueID=1707 | Query='rhinitis meaning'
+2025-12-11 18:54:55 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:54:55 | INFO | PROCESSAR UniqueID=1710 | Query='what is hay fever'
+2025-12-11 18:54:56 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:54:56 | INFO | PROCESSAR UniqueID=1727 | Query='تب یونجه چیست'
+2025-12-11 18:54:57 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:54:57 | INFO | PROCESSAR UniqueID=1740 | Query='برای حساسیت فصلی چه کنیم'
+2025-12-11 18:54:58 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:54:58 | INFO | PROCESSAR UniqueID=1743 | Query='hay fever meaning'
+2025-12-11 18:54:59 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:54:59 | INFO | PROCESSAR UniqueID=1744 | Query='hay fever meaning in urdu'
+2025-12-11 18:55:00 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:01 | INFO | PROCESSAR UniqueID=1746 | Query='what is rhinitis'
+2025-12-11 18:55:01 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:02 | INFO | PROCESSAR UniqueID=1754 | Query='rinit nedir'
+2025-12-11 18:55:03 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:03 | INFO | PROCESSAR UniqueID=1765 | Query='saman nezlesi nedir'
+2025-12-11 18:55:04 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:04 | INFO | PROCESSAR UniqueID=1768 | Query='rinit ne demek'
+2025-12-11 18:55:05 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:06 | INFO | PROCESSAR UniqueID=1774 | Query='علاج حساسية الانف والعطاس'
+2025-12-11 18:55:06 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:07 | INFO | PROCESSAR UniqueID=1780 | Query='افضل حبوب حساسية الانف'
+2025-12-11 18:55:08 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:08 | INFO | PROCESSAR UniqueID=1807 | Query='alerji nasıl geçer'
+2025-12-11 18:55:09 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:09 | INFO | PROCESSAR UniqueID=1810 | Query='alerjik astım nedir'
+2025-12-11 18:55:11 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:11 | INFO | PROCESSAR UniqueID=1814 | Query='allergic rhinitis meaning'
+2025-12-11 18:55:12 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:12 | INFO | PROCESSAR UniqueID=1832 | Query='hay fever ne demek'
+2025-12-11 18:55:13 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:13 | INFO | PROCESSAR UniqueID=1833 | Query='en iyi alerji ilacı'
+2025-12-11 18:55:14 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:15 | INFO | PROCESSAR UniqueID=1834 | Query='saman nezlesine ne iyi gelir'
+2025-12-11 18:55:15 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:16 | INFO | PROCESSAR UniqueID=1837 | Query='hay fever caused by'
+2025-12-11 18:55:17 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:17 | INFO | PROCESSAR UniqueID=1839 | Query='علاج حساسية الانف نهائيا'
+2025-12-11 18:55:18 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:19 | INFO | PROCESSAR UniqueID=1866 | Query='bahar nezlesine ne iyi gelir'
+2025-12-11 18:55:20 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:20 | INFO | PROCESSAR UniqueID=1869 | Query='what is rhinitis allergy'
+2025-12-11 18:55:21 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:21 | INFO | PROCESSAR UniqueID=1872 | Query='rhinite allergique que faire'
+2025-12-11 18:55:22 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:22 | INFO | PROCESSAR UniqueID=1876 | Query='rhinitis معنى'
+2025-12-11 18:55:24 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:24 | INFO | PROCESSAR UniqueID=1886 | Query='hayfever meaning'
+2025-12-11 18:55:25 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:25 | INFO | PROCESSAR UniqueID=1894 | Query='رینیت آلرژیک چیست'
+2025-12-11 18:55:26 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:26 | INFO | PROCESSAR UniqueID=1900 | Query='hay meaning in urdu'
+2025-12-11 18:55:27 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:55:28 | INFO | PROCESSAR UniqueID=1905 | Query='علاج حساسية الأنف نهائيا'
+2025-12-11 18:55:28 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:29 | INFO | PROCESSAR UniqueID=1909 | Query='علاج السعال التحسسي'
+2025-12-11 18:55:30 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:30 | INFO | PROCESSAR UniqueID=1910 | Query='علاج حساسية الأنف والعطاس'
+2025-12-11 18:55:31 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:31 | INFO | PROCESSAR UniqueID=1911 | Query='علاج حساسية الأنف نهائيا بالأعشاب'
+2025-12-11 18:55:32 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:55:33 | INFO | PROCESSAR UniqueID=1916 | Query='علاج الجيوب الانفية'
+2025-12-11 18:55:34 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:34 | INFO | PROCESSAR UniqueID=1928 | Query='علاج التهاب الأنف التحسسي'
+2025-12-11 18:55:34 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:35 | INFO | PROCESSAR UniqueID=1937 | Query='اسباب التهاب الانف التحسسي'
+2025-12-11 18:55:36 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:36 | INFO | PROCESSAR UniqueID=1943 | Query='برای حساسیت فصلی چه قرصی خوبه'
+2025-12-11 18:55:37 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:37 | INFO | PROCESSAR UniqueID=1946 | Query='افضل علاج لحساسية الانف'
+2025-12-11 18:55:38 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:38 | INFO | PROCESSAR UniqueID=1951 | Query='en iyi alerjik rinit ilacı hangisi'
+2025-12-11 18:55:40 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:40 | INFO | PROCESSAR UniqueID=1952 | Query='alerjik rinit ne iyi gelir'
+2025-12-11 18:55:41 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:41 | INFO | PROCESSAR UniqueID=1956 | Query='what is allergic rhinitis'
+2025-12-11 18:55:42 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:42 | INFO | PROCESSAR UniqueID=1964 | Query='icd 10 code for seasonal allergies'
+2025-12-11 18:55:43 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:43 | INFO | PROCESSAR UniqueID=1974 | Query='symptome rhinite allergique'
+2025-12-11 18:55:44 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:44 | INFO | PROCESSAR UniqueID=1979 | Query='علاج حساسية الأنف في المنزل'
+2025-12-11 18:55:45 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:45 | INFO | PROCESSAR UniqueID=1985 | Query='how to cure allergic rhinitis permanently'
+2025-12-11 18:55:46 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:47 | INFO | PROCESSAR UniqueID=1987 | Query='برای حساسیت چی خوبه'
+2025-12-11 18:55:47 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:48 | INFO | PROCESSAR UniqueID=1993 | Query='alerjik rinit nasıl geçer'
+2025-12-11 18:55:49 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:49 | INFO | PROCESSAR UniqueID=1995 | Query='alerjik rinite ne iyi gelir'
+2025-12-11 18:55:50 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:50 | INFO | PROCESSAR UniqueID=1997 | Query='alerjik rinit neden olur'
+2025-12-11 18:55:51 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:52 | INFO | PROCESSAR UniqueID=2001 | Query='siyez nedir'
+2025-12-11 18:55:53 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:55:53 | INFO | PROCESSAR UniqueID=2002 | Query='anoreksiya nedir'
+2025-12-11 18:55:54 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:55:54 | INFO | PROCESSAR UniqueID=2003 | Query='elektromanyetik kirlilik nedir'
+2025-12-11 18:55:55 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:55:55 | INFO | PROCESSAR UniqueID=2007 | Query='kronik tembellik nedir'
+2025-12-11 18:55:57 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:55:57 | INFO | PROCESSAR UniqueID=2008 | Query='saman nezlesi hangi aylarda olur'
+2025-12-11 18:55:58 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:55:58 | INFO | PROCESSAR UniqueID=2010 | Query='immünite nedir'
+2025-12-11 18:55:59 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:00 | INFO | PROCESSAR UniqueID=2013 | Query='اعراض حساسية الحلق'
+2025-12-11 18:56:01 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:01 | INFO | PROCESSAR UniqueID=2018 | Query='علاج حساسية الأنف والعطاس بالمنزل'
+2025-12-11 18:56:02 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:02 | INFO | PROCESSAR UniqueID=2019 | Query='أعراض الحساسية الأنف'
+2025-12-11 18:56:03 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:03 | INFO | PROCESSAR UniqueID=2021 | Query='what's the matter just hay fever'
+2025-12-11 18:56:04 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:04 | INFO | PROCESSAR UniqueID=2030 | Query='برای حساسیت فصلی چی خوبه'
+2025-12-11 18:56:05 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:05 | INFO | PROCESSAR UniqueID=2031 | Query='نئوتادین چیست'
+2025-12-11 18:56:06 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:07 | INFO | PROCESSAR UniqueID=2033 | Query='saman nezlesi belirtileri'
+2025-12-11 18:56:08 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:08 | INFO | PROCESSAR UniqueID=2034 | Query='bilaxten nedir'
+2025-12-11 18:56:09 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:09 | INFO | PROCESSAR UniqueID=2039 | Query='bahar nezlesi nedir'
+2025-12-11 18:56:10 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:11 | INFO | PROCESSAR UniqueID=2049 | Query='what's hay fever'
+2025-12-11 18:56:11 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:12 | INFO | PROCESSAR UniqueID=2051 | Query='أفضل بخاخ لحساسية الأنف'
+2025-12-11 18:56:13 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:13 | INFO | PROCESSAR UniqueID=2052 | Query='hay fever meaning in malayalam'
+2025-12-11 18:56:14 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:14 | INFO | PROCESSAR UniqueID=2055 | Query='what is hayfever'
+2025-12-11 18:56:15 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:16 | INFO | PROCESSAR UniqueID=2058 | Query='برای حساسیت فصلی چه قرصی بخوریم'
+2025-12-11 18:56:16 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:17 | INFO | PROCESSAR UniqueID=2060 | Query='alerjik rinit ne demek'
+2025-12-11 18:56:18 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:19 | INFO | PROCESSAR UniqueID=2061 | Query='desmont ne işe yarar'
+2025-12-11 18:56:20 | INFO |  -> ARIA_Category=Foreground
+2025-12-11 18:56:21 | INFO |  -> GRADE_Question gerada.
+2025-12-11 18:56:21 | INFO | PROCESSAR UniqueID=2062 | Query='allerset nedir'
+2025-12-11 18:56:22 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:22 | INFO | PROCESSAR UniqueID=2071 | Query='علاج حساسية الانف في البيت'
+2025-12-11 18:56:23 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:23 | INFO | PROCESSAR UniqueID=2082 | Query='rinit alerji nedir'
+2025-12-11 18:56:24 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:24 | INFO | PROCESSAR UniqueID=2086 | Query='desmont nedir'
+2025-12-11 18:56:25 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:26 | INFO | PROCESSAR UniqueID=2088 | Query='hay fever meaning in english'
+2025-12-11 18:56:27 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:27 | INFO | PROCESSAR UniqueID=2097 | Query='التهاب الانف من الداخل'
+2025-12-11 18:56:28 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:29 | INFO | PROCESSAR UniqueID=2098 | Query='rhinite définition'
+2025-12-11 18:56:30 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:30 | INFO | PROCESSAR UniqueID=2101 | Query='اعراض التهاب الانف'
+2025-12-11 18:56:31 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:31 | INFO | PROCESSAR UniqueID=2105 | Query='alerjiye ne iyi gelir'
+2025-12-11 18:56:32 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:33 | INFO | PROCESSAR UniqueID=2106 | Query='mevsimsel alerjik rinit nedir'
+2025-12-11 18:56:33 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:34 | INFO | PROCESSAR UniqueID=2108 | Query='coryza means'
+2025-12-11 18:56:35 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:35 | INFO | PROCESSAR UniqueID=2115 | Query='رینیت چیست'
+2025-12-11 18:56:36 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:36 | INFO | PROCESSAR UniqueID=2120 | Query='coryza meaning'
+2025-12-11 18:56:37 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:37 | INFO | PROCESSAR UniqueID=2142 | Query='vazomotor rinit nedir'
+2025-12-11 18:56:43 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:43 | INFO | PROCESSAR UniqueID=2145 | Query='rhinitis nedir'
+2025-12-11 18:56:45 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:45 | INFO | PROCESSAR UniqueID=2148 | Query='علاج التهاب الانف من الداخل'
+2025-12-11 18:56:46 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:46 | INFO | PROCESSAR UniqueID=2152 | Query='kronik rinit nedir'
+2025-12-11 18:56:47 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:47 | INFO | PROCESSAR UniqueID=2156 | Query='what is coryza'
+2025-12-11 18:56:49 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:49 | INFO | PROCESSAR UniqueID=2159 | Query='علاج التهاب الأنف من الداخل'
+2025-12-11 18:56:50 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:50 | INFO | PROCESSAR UniqueID=2162 | Query='koriza nedir'
+2025-12-11 18:56:52 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:52 | INFO | PROCESSAR UniqueID=2164 | Query='rhinitis causes'
+2025-12-11 18:56:53 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:53 | INFO | PROCESSAR UniqueID=2165 | Query='urticaria meaning'
+2025-12-11 18:56:54 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:55 | INFO | PROCESSAR UniqueID=2175 | Query='alerji testi'
+2025-12-11 18:56:56 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:56 | INFO | PROCESSAR UniqueID=2176 | Query='astım nedir'
+2025-12-11 18:56:57 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:57 | INFO | PROCESSAR UniqueID=2180 | Query='define rhinitis'
+2025-12-11 18:56:58 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:58 | INFO | PROCESSAR UniqueID=2195 | Query='difference between rhinitis and sinusitis'
+2025-12-11 18:56:59 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:56:59 | INFO | PROCESSAR UniqueID=2208 | Query='bronchitis symptoms'
+2025-12-11 18:57:01 | INFO |  -> ARIA_Category=Unrelated
+2025-12-11 18:57:01 | INFO | PROCESSAR UniqueID=2225 | Query='rinitis nedir'
+2025-12-11 18:57:02 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:57:02 | INFO | PROCESSAR UniqueID=2226 | Query='rhinitis vs sinusitis'
+2025-12-11 18:57:03 | INFO |  -> ARIA_Category=Background
+2025-12-11 18:57:03 | INFO | === 5) MERGE COM QUERIES ÚNICAS ===
+2025-12-11 18:57:04 | INFO | Resultados por UniqueID guardados em: PART2_3_unique_results.xlsx
+2025-12-11 18:57:04 | INFO | === 6) MERGE COM DATASET COMPLETO ===
+2025-12-11 18:57:08 | INFO | Dataset completo com colunas extra guardado em: PART2_3_full_dataset.xlsx
+2025-12-11 18:57:08 | INFO | ====================================================
+2025-12-11 18:57:08 | INFO | 🏁 Fim da execução do pipeline DECIDE – PARTE 2 + 3
+2025-12-11 18:57:08 | INFO | ⏱ Tempo total: 00:10:20
+2025-12-11 18:57:08 | INFO | ====================================================

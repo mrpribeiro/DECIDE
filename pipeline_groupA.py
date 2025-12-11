@@ -1,5 +1,6 @@
 # ==========================================================================
-# DECIDE – PIPELINE LLM PARA CLASSIFICAÇÃO DE QUERIES (SONAR PERPLEXITY API)
+# DECIDE – PIPELINE LLM PARA CLASSIFICAÇÃO DE QUERIES
+#                 Perplexity (sonar) + OpenAI GPT-4o-mini + Gemini 2.5 Flash
 # ==========================================================================
 #
 # INSTRUÇÕES INICIAIS:
@@ -11,21 +12,32 @@
 #   > mamba activate decide_env
 #
 # Depois instalar os pacotes necessários:
+#   > pip install pandas python-dotenv openpyxl perplexityai openai google-generativeai
 #
-#   > pip install groq pandas python-dotenv openpyxl perplexityai
-#
-# Criar um ficheiro .env na mesma pasta, contendo (seguir tutorial: https://docs.perplexity.ai/getting-started/quickstart):
+# Criar um ficheiro .env na mesma pasta, contendo:
 #
 #   PERPLEXITY_API_KEY= "A_TUA_CHAVE_AQUI"
+#   OPENAI_API_KEY= "A_TUA_CHAVE_OPENAI_AQUI"
+#   GEMINI_API_KEY= "A_TUA_CHAVE_GEMINI_AQUI"
 #
 # Este script:
 #   1) lê o ficheiro queries_middle_east.xlsx
 #   2) normaliza o texto das queries
 #   3) remove duplicados e cria UniqueID para cada query única
-#   4) faz RUN 1 e RUN 2 usando perplexity API (modelo: sonar)
+#   4) faz RUN 1 e RUN 2 usando:
+#        - Perplexity (sonar)  → colunas LLM_run1_Perplexity / LLM_run2_Perplexity
+#        - OpenAI GPT-4o-mini  → colunas LLM_run1_GPT        / LLM_run2_GPT
+#        - Gemini 2.5 Flash    → colunas LLM_run1_Gemini     / LLM_run2_Gemini
 #   5) aplica regras multilingues baseadas no Supplement Box 2B (expandido)
 #   6) faz merge usando UniqueID (evitando problemas de inconsistências)
-#   7) exporta: queries_classificadas_llm.xlsx
+#   7) exporta: queries_classificadas_COMPLETO.xlsx
+
+# =======================
+# FLAGS PARA CADA LLM
+# =======================
+USE_PERPLEXITY = True  # muda para True se quiseres usar Perplexity (sonar)
+USE_GPT = True        # muda para True se quiseres usar OpenAI GPT-4o-mini
+USE_GEMINI = True     # muda para True se quiseres usar Gemini 2.5 Flash
 
 # =======================
 # IMPORTS
@@ -40,7 +52,15 @@ import pandas as pd
 
 from dotenv import load_dotenv
 from datetime import datetime
+
+# Perplexity
 from perplexity import Perplexity
+
+# OpenAI (GPT-4o-mini)
+from openai import OpenAI
+
+# Google Gemini
+import google.generativeai as genai
 
 # ============================================================
 # LOGGING CONFIGURATION
@@ -78,20 +98,45 @@ console_handler.setFormatter(formatter)
 logger.addHandler(console_handler)
 
 # ============================
-# 0. CONFIGURAR PERPLEXITY API
+# 0. CONFIGURAR APIs + .env
 # ============================
+
 load_dotenv()
 
-api_key = os.environ.get("PERPLEXITY_API_KEY")
-if not api_key:
-    raise ValueError("Variável de ambiente PERPLEXITY_API_KEY não definida.")
-
-client = Perplexity(api_key=api_key)
-
-MODEL_NAME = "sonar"   # ou "sonar-pro"
+# --- Perplexity ---
+perplexity_client = None
+PERPLEXITY_MODEL_NAME = "sonar"
 BATCH_SIZE = 50
 
-logger.info("Ambiente carregado e cliente Perplexity SDK configurado!")
+if USE_PERPLEXITY:
+    perplexity_key = os.environ.get("PERPLEXITY_API_KEY")
+    if not perplexity_key:
+        raise ValueError("Variável de ambiente PERPLEXITY_API_KEY não definida.")
+    perplexity_client = Perplexity(api_key=perplexity_key)
+    logger.info("Cliente Perplexity SDK configurado (sonar).")
+
+# --- OpenAI GPT-4o-mini ---
+gpt_client = None
+GPT_MODEL_NAME = "gpt-4o-mini"
+
+if USE_GPT:
+    gpt_api_key = os.environ.get("OPENAI_API_KEY")
+    if not gpt_api_key:
+        raise ValueError("Variável de ambiente OPENAI_API_KEY não definida.")
+    gpt_client = OpenAI(api_key=gpt_api_key)
+    logger.info("Cliente OpenAI GPT configurado (gpt-4o-mini).")
+
+# --- Gemini 2.5 Flash ---
+gemini_model = None
+GEMINI_MODEL_NAME = "gemini-2.5-flash"
+
+if USE_GEMINI:
+    gemini_api_key = os.environ.get("GEMINI_API_KEY")
+    if not gemini_api_key:
+        raise ValueError("Variável de ambiente GEMINI_API_KEY não definida.")
+    genai.configure(api_key=gemini_api_key)
+    gemini_model = genai.GenerativeModel(GEMINI_MODEL_NAME)
+    logger.info("Cliente Gemini configurado (gemini-2.5-flash).")
 
 
 # ============================================================
@@ -118,7 +163,7 @@ def normalize_query(q):
 
 def load_queries(path="queries_middle_east.xlsx"):
     df = pd.read_excel(path)
-    # df = df.tail(100)  # PARA TESTES RÁPIDOS
+    # df = df.tail(75)  # PARA TESTES RÁPIDOS
 
     if "Query" not in df.columns:
         raise ValueError("A coluna 'Query' não existe no ficheiro.")
@@ -209,28 +254,26 @@ def safe_json_extract(text):
         return None
 
 
-# ============================================================
-# 6. FUNÇÃO PARA CLASSIFICAR UM BATCH COM O LLM
-# ============================================================
+# =======================================
+# 6A. CLASSIFICAR UM BATCH COM PERPLEXITY
+# =======================================
 
-def classify_batch_with_llm(batch):
-    """
-    Devolve lista de dicts: { "query": ..., "explicit_question": "YES"/"NO" }
-    """
+def classify_batch_perplexity(batch):
+    """Classificação de um batch com Perplexity (sonar)."""
     prompt = build_prompt_for_batch(batch)
 
-    response = client.chat.completions.create(
-        model=MODEL_NAME,
+    response = perplexity_client.chat.completions.create(
+        model=PERPLEXITY_MODEL_NAME,
         messages=[{"role": "user", "content": prompt}],
         temperature=0  # respostas mais determinísticas, menos aleatórias
     )
 
     raw = response.choices[0].message.content
-
     data = safe_json_extract(raw)
+
     if data is None:
-        logger.error("Falha ao extrair JSON; a guardar resposta bruta para debug.")
-        with open("failed_batch.txt", "a", encoding="utf-8") as f:
+        logger.error("Falha ao extrair JSON (Perplexity); a guardar resposta bruta para debug.")
+        with open("failed_batch_perplexity.txt", "a", encoding="utf-8") as f:
             f.write(raw + "\n\n" + "="*80 + "\n\n")
         return []
 
@@ -245,10 +288,79 @@ def classify_batch_with_llm(batch):
 
 
 # ============================================================
-# 7. FUNÇÃO: EXECUTAR UMA RUN COMPLETA (RUN 1 / RUN 2)
+# 6B. CLASSIFICAR UM BATCH – GPT-4o-mini
 # ============================================================
 
-def run_llm_classification(df_unique, run_name):
+def classify_batch_gpt(batch):
+    """Classificação de um batch com OpenAI GPT-4o-mini."""
+    prompt = build_prompt_for_batch(batch)
+
+    response = gpt_client.chat.completions.create(
+        model=GPT_MODEL_NAME,
+        messages=[{"role": "user", "content": prompt}],
+        temperature=0
+    )
+
+    raw = response.choices[0].message.content
+    data = safe_json_extract(raw)
+
+    if data is None:
+        logger.error("Falha ao extrair JSON (GPT); a guardar resposta bruta para debug.")
+        with open("failed_batch_gpt.txt", "a", encoding="utf-8") as f:
+            f.write(raw + "\n\n" + "="*80 + "\n\n")
+        return []
+
+    cleaned = []
+    for item in data:
+        cleaned.append({
+            "query": item.get("query", "").strip(),
+            "explicit_question": item.get("explicit_question", "NO").strip().upper()
+        })
+
+    return cleaned
+
+
+# ============================================================
+# 6C. CLASSIFICAR UM BATCH – GEMINI 2.5 FLASH
+# ============================================================
+
+def classify_batch_gemini(batch):
+    """Classificação de um batch com Gemini 2.5 Flash."""
+    prompt = build_prompt_for_batch(batch)
+
+    response = gemini_model.generate_content(prompt)
+    raw = response.text
+
+    data = safe_json_extract(raw)
+
+    if data is None:
+        logger.error("Falha ao extrair JSON (Gemini); a guardar resposta bruta para debug.")
+        with open("failed_batch_gemini.txt", "a", encoding="utf-8") as f:
+            f.write(raw + "\n\n" + "="*80 + "\n\n")
+        return []
+
+    cleaned = []
+    for item in data:
+        cleaned.append({
+            "query": item.get("query", "").strip(),
+            "explicit_question": item.get("explicit_question", "NO").strip().upper()
+        })
+
+    return cleaned
+
+
+# ============================================================
+# 7. EXECUTAR UMA RUN COMPLETA PARA QUALQUER LLM (RUN 1 / RUN 2)
+# ============================================================
+
+def run_llm_classification(df_unique, run_name, classify_fn):
+    """
+    df_unique: DataFrame com colunas [UniqueID, Query]
+    run_name: nome da coluna a criar (ex: 'LLM_run1_Perplexity')
+    classify_fn: função que recebe uma lista de queries e devolve:
+                 [ { 'query': ..., 'explicit_question': 'YES'/'NO' }, ... ]
+    """
+
     rows = df_unique[["UniqueID", "Query"]]
     results = []
 
@@ -258,8 +370,9 @@ def run_llm_classification(df_unique, run_name):
         batch_queries = batch_df["Query"].tolist()
         batch_ids = batch_df["UniqueID"].tolist()
 
-        out = classify_batch_with_llm(batch_queries)
+        out = classify_fn(batch_queries)
 
+        # zip assume que o LLM devolve N items pelo menos para as N queries
         for uid, item in zip(batch_ids, out):
             results.append({
                 "UniqueID": uid,
@@ -377,17 +490,19 @@ def apply_multilingual_rules(df_unique):
 # 9. MERGE FINAL
 # ============================================================
 
-def merge_results(df_original, df_unique, df_run1, df_run2):
-    temp = df_unique.merge(df_run1, on="UniqueID", how="left")
-    temp = temp.merge(df_run2, on="UniqueID", how="left")
+def merge_results(df_original, df_unique, run_dfs):
+    """
+    df_original: DataFrame completo (com duplicados)
+    df_unique: DataFrame de queries únicas (UniqueID, Query, Rules, ...)
+    run_dfs: lista de DataFrames com colunas [UniqueID, <run_name>]
+    """
+    temp = df_unique.copy()
 
-    # Merge final com df original usando Query (agora seguro)
-    df_final = df_original.merge(
-        temp[["UniqueID","Query", "Rules", "LLM_run1", "LLM_run2"]],
-        on="Query",
-        how="left"
-    )
+    for df_run in run_dfs:
+        if df_run is not None and not df_run.empty:
+            temp = temp.merge(df_run, on="UniqueID", how="left")
 
+    df_final = df_original.merge(temp, on="Query", how="left")
     return df_final
 
 
@@ -411,28 +526,93 @@ def main():
     # df_sample.to_excel("df_sample.xlsx", index=False)
     # logger.info(f"Criada amostra aleatória de {n} queries, guardada em df_sample.xlsx")
 
-    logger.info("=== 3) RUN 1 ===")
-    df_run1 = run_llm_classification(df_unique, "LLM_run1")
-    df_run1.to_excel("df_run1.xlsx", index=False)  # TEMP
+    run_dfs = []
 
-    logger.info("\n=== 4) RUN 2 (com batches diferentes) ===")
-    df_unique_shuffled = df_unique.sample(frac=1, random_state=None).reset_index(drop=True)  # sample() função pandas usada para escolher linhas de forma aleatória
-    df_run2 = run_llm_classification(df_unique_shuffled, "LLM_run2")
-    df_run2.to_excel("df_run2.xlsx", index=False)  # TEMP
+    # -----------------------
+    # 3) Perplexity (2 runs)
+    # -----------------------
+    if USE_PERPLEXITY:
+        logger.info("=== 3) RUN 1 - Perplexity ===")
+        df_run1_perp = run_llm_classification(df_unique, "LLM_run1_Perplexity", classify_batch_perplexity)
+        df_run1_perp.to_excel("df_run1_perplexity.xlsx", index=False)
+        run_dfs.append(df_run1_perp)
 
-    logger.info("=== 5) CLASSIFICAÇÃO POR REGRAS ===")
+        logger.info("=== 4) RUN 2 - Perplexity (batches diferentes) ===")
+        df_unique_shuffled = df_unique.sample(frac=1, random_state=None).reset_index(drop=True)
+        df_run2_perp = run_llm_classification(df_unique_shuffled, "LLM_run2_Perplexity", classify_batch_perplexity)
+        df_run2_perp.to_excel("df_run2_perplexity.xlsx", index=False)
+        run_dfs.append(df_run2_perp)
+    else:
+        df_run1_perp = None
+        df_run2_perp = None
+
+    # -----------------------
+    # 5) GPT-4o-mini (2 runs)
+    # -----------------------
+    if USE_GPT:
+        logger.info("=== 5) RUN 1 - GPT-4o-mini ===")
+        df_run1_gpt = run_llm_classification(df_unique, "LLM_run1_GPT", classify_batch_gpt)
+        df_run1_gpt.to_excel("df_run1_gpt.xlsx", index=False)
+        run_dfs.append(df_run1_gpt)
+
+        logger.info("=== 6) RUN 2 - GPT-4o-mini (batches diferentes) ===")
+        df_unique_shuffled_gpt = df_unique.sample(frac=1, random_state=None).reset_index(drop=True)
+        df_run2_gpt = run_llm_classification(df_unique_shuffled_gpt, "LLM_run2_GPT", classify_batch_gpt)
+        df_run2_gpt.to_excel("df_run2_gpt.xlsx", index=False)
+        run_dfs.append(df_run2_gpt)
+    else:
+        df_run1_gpt = None
+        df_run2_gpt = None
+
+    # -----------------------
+    # 7) Gemini 2.5 Flash (2 runs)
+    # -----------------------
+    if USE_GEMINI:
+        logger.info("=== 7) RUN 1 - Gemini 2.5 Flash ===")
+        df_run1_gem = run_llm_classification(df_unique, "LLM_run1_Gemini", classify_batch_gemini)
+        df_run1_gem.to_excel("df_run1_gemini.xlsx", index=False)
+        run_dfs.append(df_run1_gem)
+
+        logger.info("=== 8) RUN 2 - Gemini 2.5 Flash (batches diferentes) ===")
+        df_unique_shuffled_gem = df_unique.sample(frac=1, random_state=None).reset_index(drop=True)
+        df_run2_gem = run_llm_classification(df_unique_shuffled_gem, "LLM_run2_Gemini", classify_batch_gemini)
+        df_run2_gem.to_excel("df_run2_gemini.xlsx", index=False)
+        run_dfs.append(df_run2_gem)
+    else:
+        df_run1_gem = None
+        df_run2_gem = None
+
+    # -----------------------
+    # 9) CLASSIFICAÇÃO POR REGRAS
+    # -----------------------
+    logger.info("=== 9) CLASSIFICAÇÃO POR REGRAS ===")
     df_unique = apply_multilingual_rules(df_unique)
     df_unique.to_excel("df_rules.xlsx", index=False)  # TEMP
 
-    logger.info("=== 6) MERGE FINAL ===")
-    df_final = merge_results(df, df_unique, df_run1, df_run2)
+    # -----------------------
+    # 10) MERGE FINAL
+    # -----------------------
+    logger.info("=== 10) MERGE FINAL ===")
+    df_final = merge_results(df, df_unique, run_dfs)
+
+    # # --- COLUNAS FIXAS WANTED ---
+    # base_cols = ["UniqueID", "Query", "Rules"]
+
+    # # --- DETECTAR TODAS AS COLUNAS DE RUN (qualquer modelo) ---
+    # llm_cols = [c for c in df_final.columns if c.startswith("LLM_run")]
+
+    # # --- COLUNAS FINAIS A EXPORTAR ---
+    # desired_cols = base_cols + llm_cols
+
+    # # --- FILTRAR DATAFRAME ---
+    # df_final = df_final[[c for c in desired_cols if c in df_final.columns]]
+
     logger.info(f"Merge final concluído: {len(df_final)} linhas totais.")
 
-    logger.info("=== 7) EXPORTAR ===")
-    output = "queries_classificadas_COMPLETO.xlsx"
+    logger.info("=== 11) EXPORTAR ===")
+    output = "LLM_complete_classification_PERP_GPT_GEM.xlsx"
     df_final.to_excel(output, index=False)
     logger.info(f"Concluído! Ficheiro gravado como: {output}\n")
-
 
 # ============================================================
 # ENTRY POINT

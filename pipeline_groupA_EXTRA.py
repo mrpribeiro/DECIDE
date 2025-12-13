@@ -1,6 +1,6 @@
-# ==========================================================================
-# DECIDE – PARTE 2 + 3 (GPT-4o, OpenAI API) – EXTRA
-# ==========================================================================
+# ===========================================================================
+# DECIDE – PARTE 2 + 3 (GPT-4o | Perplexity Sonar-Pro | Gemini-2.5-Pro) EXTRA
+# ===========================================================================
 #
 # Este script parte do OUTPUT da PARTE 1:
 #   - ficheiro de input (exemplo): LLM_complete_classification_PERP_GPT_GEM.xlsx
@@ -58,18 +58,27 @@ from datetime import datetime
 
 import pandas as pd
 from dotenv import load_dotenv
+
+# Perplexity
+from perplexity import Perplexity
+
+# OpenAI (GPT-4o-mini)
 from openai import OpenAI
+
+# Google Gemini
+import google.generativeai as genai
 
 # ============================
 # CONFIGURAÇÕES GERAIS
 # ============================
 
 INPUT_FILE = "LLM_complete_classification_PERP_GPT_GEM.xlsx"
-UNIQUE_OUTPUT_FILE = "PART2_3_unique_results.xlsx"
-FULL_OUTPUT_FILE = "PART2_3_full_dataset.xlsx"
+OUTPUT_LONG_FILE = "PART2_3_FINAL.xlsx"
 
+SLEEP_BETWEEN_CALLS = 0.3
 GPT_MODEL = "gpt-4o"
-SLEEP_BETWEEN_CALLS = 0.3  # segundos entre chamadas à API (prudência)
+PERPLEXITY_MODEL = "sonar-pro"
+GEMINI_MODEL = "gemini-2.5-pro"
 
 
 # ============================
@@ -102,19 +111,17 @@ logger.addHandler(console_handler)
 
 
 # ============================
-# OPENAI CLIENT (GPT-4o)
+# LOAD ENV + CLIENTES
 # ============================
 
 load_dotenv()
 
-api_key = os.environ.get("OPENAI_API_KEY")
-if not api_key:
-    raise ValueError("Variável de ambiente OPENAI_API_KEY não definida.")
+openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-client = OpenAI(api_key=api_key)
+perplexity_client = erplexity_client = Perplexity(api_key=os.environ.get("PERPLEXITY_API_KEY"))
 
-logger.info("Ambiente carregado e cliente OpenAI (GPT-4o) configurado!")
-
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+gemini_model = genai.GenerativeModel(GEMINI_MODEL)
 
 # ============================
 # PROMPTS – PARTE 2 & 3
@@ -232,99 +239,98 @@ Output Rules (STRICT):
 
 
 # ============================
-# FUNÇÕES AUXILIARES GPT
+# FUNÇÕES LLM
 # ============================
 
-def call_gpt(system_msg: str, user_msg: str) -> str:
-    """
-    Wrapper simples para chamar o GPT-4o com mensagens system + user.
-    Devolve o conteúdo textual (string) já stripado.
-    """
+def call_openai(system_msg, user_msg):
     try:
-        resp = client.chat.completions.create(
+        r = openai_client.chat.completions.create(
             model=GPT_MODEL,
             messages=[
                 {"role": "system", "content": system_msg},
-                {"role": "user", "content": user_msg},
+                {"role": "user", "content": user_msg}
             ],
             temperature=0
         )
-        text = resp.choices[0].message.content
-        if text is None:
-            return ""
-        return text.strip()
+        return r.choices[0].message.content.strip()
     except Exception as e:
-        logger.error(f"Erro na chamada à API GPT-4o: {e}")
+        logger.error(f"OpenAI error: {e}")
         return ""
 
 
-def parse_parte2_output(text: str):
-    """
-    Espera algo do género:
-        Category: Foreground
-        Reasoning: ...
-    Faz parsing robusto e devolve (category, reasoning).
-    """
+def call_perplexity(system_msg, user_msg):
+    try:
+        r = perplexity_client.chat.completions.create(
+            model=PERPLEXITY_MODEL,
+            messages=[
+                {"role": "system", "content": system_msg},
+                {"role": "user", "content": user_msg}
+            ],
+            temperature=0
+        )
+        return r.choices[0].message.content.strip()
+    except Exception as e:
+        logger.error(f"Perplexity error: {e}")
+        return ""
+
+
+def call_gemini(system_msg, user_msg):
+    try:
+        prompt = f"{system_msg}\n\n{user_msg}"
+        r = gemini_model.generate_content(prompt)
+        return r.text.strip()
+    except Exception as e:
+        logger.error(f"Gemini error: {e}")
+        return ""
+
+
+# ============================
+# PARSING
+# ============================
+
+def parse_parte2_output(text):
     if not text:
         return "", ""
 
-    # remove aspas exteriores, se vier tipo "..." ou '...'
-    text_clean = text.strip().strip('"').strip("'")
+    text = text.strip().strip('"').strip("'")
 
-    cat = ""
-    reason = ""
+    cat_match = re.search(r"Category:\s*(.+)", text, re.IGNORECASE)
+    reason_match = re.search(r"Reasoning:\s*(.+)", text, re.IGNORECASE | re.DOTALL)
 
-    # Procurar linhas tipo "Category: X"
-    cat_match = re.search(r"Category:\s*(.+)", text_clean, re.IGNORECASE)
-    if cat_match:
-        cat = cat_match.group(1).strip()
+    category = cat_match.group(1).strip() if cat_match else ""
+    reasoning = reason_match.group(1).strip() if reason_match else ""
 
-    reason_match = re.search(r"Reasoning:\s*(.+)", text_clean, re.IGNORECASE | re.DOTALL)
-    if reason_match:
-        reason = reason_match.group(1).strip()
+    category_low = category.lower()
+    if "foreground" in category_low:
+        category = "Foreground"
+    elif "background" in category_low:
+        category = "Background"
+    elif "unrelated" in category_low:
+        category = "Unrelated"
 
-    # Se não encontrou nada, fallback: tudo dentro de reasoning
-    if not cat and not reason:
-        reason = text_clean
-
-    # Normalizar categoria
-    cat_norm = cat.lower()
-    if "unrelated" in cat_norm:
-        cat = "Unrelated"
-    elif "background" in cat_norm:
-        cat = "Background"
-    elif "foreground" in cat_norm:
-        cat = "Foreground"
-
-    return cat, reason
-
-
-def classify_parte2(query: str):
-    """
-    Aplica o PROMPT_PARTE2_SYSTEM a uma query e devolve:
-        (ARIA_Category, ARIA_Reasoning)
-    """
-    user_msg = f"Query to classify:\n{query}"
-    raw = call_gpt(PROMPT_PARTE2_SYSTEM, user_msg)
-    category, reasoning = parse_parte2_output(raw)
     return category, reasoning
 
 
-def build_grade_question_parte3(query: str) -> str:
-    """
-    Aplica o PROMPT_PARTE3_SYSTEM e devolve a string final.
-    Pode ser:
-        - "Should ... be used ...?"
-        - "Error: Intervention too vague."
-    """
-    user_msg = f"Query to transform into a GRADE question:\n{query}"
-    raw = call_gpt(PROMPT_PARTE3_SYSTEM, user_msg)
-    if not raw:
-        return ""
+# ============================
+# PIPELINE POR LLM
+# ============================
 
-    # remover aspas exteriores, se existirem
-    q = raw.strip().strip('"').strip("'")
-    return q
+def run_part2_part3(query, llm_call):
+    raw_p2 = llm_call(
+        PROMPT_PARTE2_SYSTEM,
+        f"Query to classify:\n{query}"
+    )
+    category, reasoning = parse_parte2_output(raw_p2)
+
+    grade_q = ""
+    if category == "Foreground":
+        raw_p3 = llm_call(
+            PROMPT_PARTE3_SYSTEM,
+            f"Query to transform into a GRADE question:\n{query}"
+        )
+        grade_q = raw_p3.strip().strip('"').strip("'")
+
+    return category, reasoning, grade_q
 
 
 # ============================
@@ -332,127 +338,84 @@ def build_grade_question_parte3(query: str) -> str:
 # ============================
 
 def main():
-    logger.info("=== 1) A LER INPUT ===")
-    df_full = pd.read_excel(INPUT_FILE)
-    # df_full = df_full.tail(200)  # PARA TESTES RÁPIDOS
-    logger.info(f"Ficheiro lido: {INPUT_FILE} com {len(df_full)} linhas.")
+    logger.info("=== LER INPUT ===")
+    df = pd.read_excel(INPUT_FILE)
+    # df = df.head(200)  # Para testes rápidos; remover em produção
 
-    if "UniqueID" not in df_full.columns or "Query" not in df_full.columns:
-        raise ValueError("Necessário ter colunas 'UniqueID' e 'Query' no ficheiro de input.")
+    llm_cols = [c for c in df.columns if c.startswith("LLM_run")]
+    rules_col = "Rules" if "Rules" in df.columns else None
 
-    # Detectar colunas LLM_run* da parte 1
-    llm_cols = [c for c in df_full.columns if c.startswith("LLM_run")]
-    if "Rules" not in df_full.columns:
-        logger.warning("Coluna 'Rules' não encontrada - será ignorado o critério baseado em Rules.")
-        rules_col = None
-    else:
-        rules_col = "Rules"
-
-    # ============================
-    # 2) REDUZIR A QUERIES ÚNICAS
-    # ============================
-    # Uma linha por UniqueID
-    df_unique = df_full.drop_duplicates(subset=["UniqueID"]).copy()
-    logger.info(f"Queries únicas (por UniqueID): {len(df_unique)}")
-
-    # ============================
-    # 3) DEFINIR QUEM É 'PERGUNTA EXPLÍCITA'
-    # ============================
-    logger.info("=== 3) SELECIONAR QUERIES EXPLÍCITAS ===")
+    df_unique = df.drop_duplicates(subset=["UniqueID"]).copy()
 
     mask_rules = (df_unique[rules_col] == "YES") if rules_col else False
-    mask_llm = False
-    if llm_cols:
-        mask_llm = df_unique[llm_cols].eq("YES").any(axis=1)
+    mask_llm = df_unique[llm_cols].eq("YES").any(axis=1)
 
-    mask_explicit = mask_rules | mask_llm
+    df_explicit = df_unique[mask_rules | mask_llm].copy()
+    logger.info(f"Queries explícitas: {len(df_explicit)}")
 
-    df_explicit = df_unique[mask_explicit].copy()
-    logger.info(f"Queries explícitas a processar (Parte 2 + 3): {len(df_explicit)}")
+    LLM_PIPELINES = {
+        "gpt4o": call_openai,
+        "sonar_pro": call_perplexity,
+        "gemini_2_5_pro": call_gemini
+    }
 
-    # ============================
-    # 4) LOOP SOBRE QUERIES EXPLÍCITAS
-    # ============================
+    results = []
 
-    results = []  # lista de dicts: {UniqueID, ARIA_Category, ARIA_Reasoning, GRADE_Question}
-
-    for idx, row in df_explicit.iterrows():
+    for _, row in df_explicit.iterrows():
         uid = row["UniqueID"]
         query = row["Query"]
 
-        logger.info(f"PROCESSAR UniqueID={uid} | Query='{query}'")
-
-        # ---- PARTE 2 ----
-        category, reasoning = classify_parte2(query)
-        logger.info(f" -> ARIA_Category={category}")
-
-        grade_q = ""
-
-        # ---- PARTE 3 (só se Foreground) ----
-        if category.lower() == "foreground":
-            grade_q = build_grade_question_parte3(query)
-            logger.info(f" -> GRADE_Question gerada.")
-
-        results.append({
+        record = {
             "UniqueID": uid,
-            "ARIA_Category": category,
-            "ARIA_Reasoning": reasoning,
-            "GRADE_Question": grade_q
-        })
+            "Query": query
+        }
 
-        # pequena pausa por prudência (rate limits)
-        time.sleep(SLEEP_BETWEEN_CALLS)
+        for llm_name in LLM_PIPELINES.keys():
+            record[f"ARIA_Category_{llm_name}"] = "N/A"
+            record[f"ARIA_Reasoning_{llm_name}"] = "N/A"
+            record[f"GRADE_Question_{llm_name}"] = "N/A"
 
-    # Converter resultados em DataFrame
-    df_res = pd.DataFrame(results)
+        for llm_name, llm_call in LLM_PIPELINES.items():
+            logger.info(f"[{llm_name}] UniqueID={uid}")
 
-    # ============================
-    # 5) MERGE COM df_unique
-    # ============================
+            cat, reason, grade = run_part2_part3(query, llm_call)
 
-    logger.info("=== 5) MERGE COM QUERIES ÚNICAS ===")
+            record[f"ARIA_Category_{llm_name}"] = cat if cat else "N/A"
+            record[f"ARIA_Reasoning_{llm_name}"] = reason if reason else "N/A"
+            record[f"GRADE_Question_{llm_name}"] = grade if grade else "N/A"
 
-    df_unique_out = df_unique.merge(df_res, on="UniqueID", how="left")
+            time.sleep(SLEEP_BETWEEN_CALLS)
 
-    # Guardar resultados únicos
-    df_unique_out[["UniqueID", "Query", "ARIA_Category", "ARIA_Reasoning", "GRADE_Question"]] \
-        .to_excel(UNIQUE_OUTPUT_FILE, index=False)
-    logger.info(f"Resultados por UniqueID guardados em: {UNIQUE_OUTPUT_FILE}")
+        results.append(record)
 
-    # ============================
-    # 6) MERGE COM DATASET COMPLETO
-    # ============================
+    df_resultados = pd.DataFrame(results)
 
-    logger.info("=== 6) MERGE COM DATASET COMPLETO ===")
+    # Segurança adicional (caso algum NaN tenha escapado)
+    df_resultados = df_resultados.fillna("N/A")
+    df_resultados.to_excel(OUTPUT_LONG_FILE, index=False)
 
-    df_full_out = df_full.merge(
-        df_unique_out[["UniqueID", "ARIA_Category", "ARIA_Reasoning", "GRADE_Question"]],
-        on="UniqueID",
+    logger.info(f"Output UNIQUE guardado: {OUTPUT_LONG_FILE}")
+
+    df_input_unique = pd.read_excel("LLM_class_unique_PERP_GPT_GEM.xlsx")
+
+    df_full_unique = df_input_unique.merge(
+        df_resultados,
+        on=["UniqueID"],
         how="left"
     )
 
-    df_full_out.to_excel(FULL_OUTPUT_FILE, index=False)
-    logger.info(f"Dataset completo com colunas extra guardado em: {FULL_OUTPUT_FILE}")
+    df_full_unique = df_full_unique.fillna("N/A")
 
+    df_full_unique.to_excel("PART2_3_FINAL_unique.xlsx", index=False)
 
+    logger.info("Output FULL DATASET UNIQUE guardado: PART2_3_FINAL_unique.xlsx")
 # ============================
 # ENTRY POINT
 # ============================
 
 if __name__ == "__main__":
-    logger.info("====================================================")
-    logger.info("🚀 Início da execução do pipeline DECIDE – PARTE 2 + 3 (GPT-4o)")
-    logger.info("====================================================")
+    logger.info("🚀 Início pipeline DECIDE Parte 2 + 3 (Multi-LLM independente)")
     t0 = time.time()
-
     main()
-
     elapsed = int(time.time() - t0)
-    h = elapsed // 3600
-    m = (elapsed % 3600) // 60
-    s = elapsed % 60
-
-    logger.info("====================================================")
-    logger.info("🏁 Fim da execução do pipeline DECIDE – PARTE 2 + 3")
-    logger.info(f"⏱ Tempo total: {h:02d}:{m:02d}:{s:02d}")
-    logger.info("====================================================")
+    logger.info(f"🏁 Fim | Tempo total: {elapsed//60:02d}:{elapsed%60:02d}")

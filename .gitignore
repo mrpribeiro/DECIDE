@@ -1,3 +1,4 @@
 *.env
 *.json
 *_test.xlsx
+.Rproj.user

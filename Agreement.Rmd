@@ -1,0 +1,104 @@
+---
+title: "Agreement"
+author: "João Silva"
+date: "2025-12-13"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Reliability and agreement exercises
+
+## Introduction
+
+A table of data agree_1_IA.csv contains information on the classification of the questions (1=yes or 0=no) of 2226 queries.
+
+The classification was made independently by syntax rules (variables: Rules) and by three different LLMs 2 times each (variables: LLM_run1_Perplexity, LLM_run2_Perplexity, LLM_run1_GPT, LLM_run2_GPT, LLM_run1_Gemini, LLM_run2_Gemini).
+
+1. Assess the inter-rater agreement and reliably among classification method.
+
+2. Are the two development tests intersubstitutable?
+
+## Install and load packages: foreignm obs-agree, psy, boot
+
+```{r, results='hide', include= FALSE}
+# CRAN packages list
+cran_packages <- c("psy", "boot","tidyverse")
+
+# Install only CRAN packages that are not already installed
+for (pkg in cran_packages) {
+  if (!requireNamespace(pkg, quietly = TRUE)) {
+    install.packages(pkg)
+  }
+}
+
+# Check and install obs.agree if necessary
+if (!requireNamespace("obs.agree", quietly = TRUE)) {
+  install.packages("obs.agree_1.0.tar", repos = NULL, type = "source")
+}
+
+# Load all packages
+all_packages <- c(cran_packages, "obs.agree")
+lapply(all_packages, library, character.only = TRUE)
+```
+
+
+## Get data from csv file
+
+```{r}
+# Read the csv file named "agree_1_IA.csv" using the read.csv function
+# After file=, you must enter the path to the agree_1_IA.csv file on your computer.
+agree_1_IA <- read.csv(file="agree_1_IA.csv",sep=";",header=TRUE)
+agree_1_sample <- read.csv(file="agree_1_sample.csv",sep=";",header=TRUE)
+agree_1_sample_manual <- read.csv(file="agree_1_sample_manual.csv",sep=";",header=TRUE)
+# Convert the 'agree' object (which is a special 'data.frame' class from read.csv) into a standard R data.frame
+# This ensures compatibility with other functions that expect a common data.frame
+agree_1_IA <- as.data.frame(agree_1_IA)
+agree_1_sample <- as.data.frame(agree_1_sample)
+agree_1_sample_manual <- as.data.frame(agree_1_sample_manual)
+# Convert the 'agree' data.frame into a data matrix (data.matrix)
+# This transforms all columns into numeric types if possible, creating a numeric matrix
+# Useful for analyses requiring matrix data, but may lose factor labels or strings
+agree_1_IA <- data.matrix(agree_1_IA)
+agree_1_sample <- data.matrix(agree_1_sample)
+agree_1_sample_manual <- data.matrix(agree_1_sample_manual)
+```
+
+## Question 1: assess the inter-rater agreement and reliability among classifications
+
+### To asssess the agreement: Proportions of overall and specific agreement 
+
+```{r}
+RAI_1_IA<-RAI(agree_1_IA[,c(1,2,3,4,5,6,7)])
+RAI_1_sample<-RAI(agree_1_sample[,c(1,2,3,4,5,6,7,8,9)])
+RAI_1_sample_manual<-RAI(agree_1_sample_manual[,c(1,2)])
+cat("IA Overall agreement")
+RAI_1_IA$Overall_agreement$value
+cat("Sample Overall agreement")
+RAI_1_sample$Overall_agreement$value
+cat("Sample Manual Overall agreement")
+RAI_1_sample_manual$Overall_agreement$value
+cat("IA Specific agreement")
+RAI_1_IA$Specific_agreement$value
+cat("Sample Specific agreement")
+RAI_1_sample$Specific_agreement$value
+cat("Sample Manual Specific agreement")
+RAI_1_sample_manual$Specific_agreement$value
+```
+
+If one IA method, selected at random, makes a classification (particular query present: yes or no), the probability of another method making an equal classification is 0.96
+
+If one IA method, selected at random, makes the classification yes (the particular query is present), the probability of another method making the same classification is 0.98
+
+If one IA method, selected at random, makes the classification no (the particular query is not present), the probability of another method making the same classification is 0.82
+
+# To assess reliability: Kappa 
+
+```{r}
+lkappa(agree_1_IA[,c(1,2,3,4,5,6,7)])
+lkappa(agree_1_sample[,c(1,2,3,4,5,6,7,8,9)])
+lkappa(agree_1_sample_manual[,c(1,2)])
+```
+

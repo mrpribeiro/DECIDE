@@ -45,7 +45,7 @@
 #
 #   Ficheiro .env na raiz:
 #
-#       OPENAI_API_KEY="A_TUA_CHAVE_AQUI"
+#       API_KEY="A_TUA_CHAVE_AQUI"
 #
 # ==========================================================================
 
@@ -409,6 +409,7 @@ def main():
     df_full_unique.to_excel("PART2_3_FINAL_unique.xlsx", index=False)
 
     logger.info("Output FULL DATASET UNIQUE guardado: PART2_3_FINAL_unique.xlsx")
+
 # ============================
 # ENTRY POINT
 # ============================

@@ -33,7 +33,7 @@ README.md
 
 ## 🔹 Parte 1 — Identificação de Queries com Pergunta Explícita
 
-A Parte 1 tem como objetivo identificar se uma query **transmite explicitamente uma pergunta**, seguindo a metodologia descrita no **Supplement Box 2A e 2B** do artigo AIM.
+A Parte 1 tem como objetivo identificar se uma query **transmite explicitamente uma pergunta**, seguindo a metodologia descrita no **Supplement Box 2A e 2B** do artigo.
 
 ### ✔ Normalização e deduplicação
 

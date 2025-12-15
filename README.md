@@ -29,9 +29,6 @@ README.md
 .env
 .gitignore
 ```
-
----
-
 ---
 
 ## 🔹 Parte 1 — Identificação de Queries com Pergunta Explícita

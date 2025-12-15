@@ -25,7 +25,7 @@ The classification was made independently by syntax rules (variables: Rules) and
 
 ```{r, results='hide', include= FALSE}
 # CRAN packages list
-cran_packages <- c("psy", "boot","tidyverse")
+cran_packages <- c("psy", "boot","tidyverse", "ggplot2", "reshape2")
 
 # Install only CRAN packages that are not already installed
 for (pkg in cran_packages) {
@@ -54,12 +54,14 @@ agree_1_IA <- read.csv(file="agree_1_IA.csv",sep=";",header=TRUE)
 agree_1_sample <- read.csv(file="agree_1_sample.csv",sep=";",header=TRUE)
 agree_1_sample_manual <- read.csv(file="agree_1_sample_manual.csv",sep=";",header=TRUE)
 agree_1_sample_alt <- read.csv(file="agree_1_sample_alt.csv",sep=";",header=TRUE)
+agree_2 <- read.csv(file="agree_2.csv",sep=";",header=TRUE)
 # Convert the 'agree' object (which is a special 'data.frame' class from read.csv) into a standard R data.frame
 # This ensures compatibility with other functions that expect a common data.frame
 agree_1_IA <- as.data.frame(agree_1_IA)
 agree_1_sample <- as.data.frame(agree_1_sample)
 agree_1_sample_manual <- as.data.frame(agree_1_sample_manual)
 agree_1_sample_alt <- as.data.frame(agree_1_sample_alt)
+agree_2 <- as.data.frame(agree_2)
 # Convert the 'agree' data.frame into a data matrix (data.matrix)
 # This transforms all columns into numeric types if possible, creating a numeric matrix
 # Useful for analyses requiring matrix data, but may lose factor labels or strings
@@ -67,9 +69,10 @@ agree_1_IA <- data.matrix(agree_1_IA)
 agree_1_sample <- data.matrix(agree_1_sample)
 agree_1_sample_manual <- data.matrix(agree_1_sample_manual)
 agree_1_sample_alt <- data.matrix(agree_1_sample_alt)
+agree_2 <- data.matrix(agree_2)
 ```
 
-## Question 1: assess the inter-rater agreement and reliability among classifications
+## Part 1: assess the inter-rater agreement and reliability among classifications
 
 ### To asssess the agreement: Proportions of overall and specific agreement 
 
@@ -201,20 +204,12 @@ for (i in 1:9) {
 }
 rownames(overall_agreement_matrix) <- c(1:9)
 rownames(overall_agreement_matrix)[1:7] <- paste("IA", 1:7)
-rownames(overall_agreement_matrix)[8:9] <- paste("Manual",8:9)
+rownames(overall_agreement_matrix)[8:9] <- paste("Manual",1:2)
 colnames(overall_agreement_matrix) <- c(1:9)
 colnames(overall_agreement_matrix)[1:7] <- paste("IA", 1:7)
-colnames(overall_agreement_matrix)[8:9] <- paste("Manual",8:9)
-library(ggplot2)
-library(reshape2)
+colnames(overall_agreement_matrix)[8:9] <- paste("Manual",1:2)
 melted_overall_agreement <- melt(overall_agreement_matrix)
 # Plot an heatmap of the overall agreement between different methods with numeric values on the tiles
-ggplot(data = melted_overall_agreement, aes(x=Var1, y=Var2, fill=value)) +
-  geom_tile() +
-  geom_text(aes(label=round(value, 2)), color="black") +
-  scale_fill_gradient(low="white", high="blue") +
-  labs(title="Overall Agreement between IA Methods", x="IA Method", y="IA Method", fill="Overall Agreement") +
-  theme_minimal()
 ggplot(data = melted_overall_agreement, aes(x=Var1, y=Var2, fill=value)) +
   geom_tile(color = "white", linewidth = 0.5) +  # Adiciona bordas brancas
   geom_text(aes(label=round(value, 2)), color="black", size = 3.5) +
@@ -227,7 +222,110 @@ ggplot(data = melted_overall_agreement, aes(x=Var1, y=Var2, fill=value)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-# To assess reliability: Kappa 
+### To assess reliability: Kappa 
+
+```{r}
+lkappa(agree_1_IA[,c(1,2,3,4,5,6,7)])
+lkappa(agree_1_sample[,c(1,2,3,4,5,6,7,8,9)])
+lkappa(agree_1_sample_manual[,c(1,2)])
+```
+
+## Part 2: assess the inter-rater agreement and reliability among classifications
+
+### To asssess the agreement: Proportions of overall and specific agreement 
+
+```{r}
+RAI_2_IA<-RAI(agree_2[,c(1,2,3)])
+RAI_2<-RAI(agree_2[,c(1,2,3,4,5)])
+RAI_2_manual<-RAI(agree_2[,c(4,5)])
+cat("IA Overall agreement")
+RAI_2_IA$Overall_agreement$value
+cat("ALL Overall agreement")
+RAI_2$Overall_agreement$value
+cat("Manual Overall agreement")
+RAI_2_manual$Overall_agreement$value
+cat("IA Specific agreement")
+RAI_2_IA$Specific_agreement$value
+cat("ALL Specific agreement")
+RAI_2$Specific_agreement$value
+cat("Manual Specific agreement")
+RAI_2_manual$Specific_agreement$value
+```
+
+If one IA method, selected at random, makes a classification (particular query present: yes or no), the probability of another method making an equal classification is 
+
+If one IA method, selected at random, makes the classification yes (the particular query is present), the probability of another method making the same classification is 
+
+If one IA method, selected at random, makes the classification no (the particular query is not present), the probability of another method making the same classification is 
+
+### To asssess the agreement: Proportions of overall and specific agreement
+
+```{r}
+# Calculate RAI for IA method 1 vs IA method 1
+RAI_1_sample_IA_1.1<-RAI(agree_1_sample[,c(1,1)])
+# Calculate RAI for IA method 1 vs IA method 2
+RAI_1_sample_IA_1.2<-RAI(agree_1_sample[,c(1,2)])
+# Calculate RAI for IA method 1 vs IA method 3
+RAI_1_sample_IA_1.3<-RAI(agree_1_sample[,c(1,3)])
+# Calculate RAI for IA method 1 vs IA method 4
+RAI_1_sample_IA_1.4<-RAI(agree_1_sample[,c(1,4)])
+# Calculate RAI for IA method 1 vs IA method 5
+RAI_1_sample_IA_1.5<-RAI(agree_1_sample[,c(1,5)])
+# Calculate RAI for IA method 2 vs IA method 2
+RAI_1_sample_IA_2.2<-RAI(agree_1_sample[,c(2,2)])
+# Calculate RAI for IA method 2 vs IA method 3
+RAI_1_sample_IA_2.3<-RAI(agree_1_sample[,c(2,3)])
+# Calculate RAI for IA method 2 vs IA method 4
+RAI_1_sample_IA_2.4<-RAI(agree_1_sample[,c(2,4)])
+# Calculate RAI for IA method 2 vs IA method 5
+RAI_1_sample_IA_2.5<-RAI(agree_1_sample[,c(2,5)])
+# Calculate RAI for IA method 3 vs IA method 3
+RAI_1_sample_IA_3.3<-RAI(agree_1_sample[,c(3,3)])
+# Calculate RAI for IA method 3 vs IA method 4
+RAI_1_sample_IA_3.4<-RAI(agree_1_sample[,c(3,4)])
+# Calculate RAI for IA method 3 vs IA method 5
+RAI_1_sample_IA_3.5<-RAI(agree_1_sample[,c(3,5)])
+# Calculate RAI for IA method 4 vs IA method 4
+RAI_1_sample_IA_4.4<-RAI(agree_1_sample[,c(4,4)])
+# Calculate RAI for IA method 4 vs IA method 5
+RAI_1_sample_IA_4.5<-RAI(agree_1_sample[,c(4,5)])
+# Calculate RAI for IA method 5 vs IA method 5
+RAI_1_sample_IA_5.5<-RAI(agree_1_sample[,c(5,5)])
+# Plot an heatmap of the overall agreement between different methods
+overall_agreement_matrix <- matrix(NA, nrow=5, ncol=5)
+for (i in 1:5) {
+  for (j in 1:5) {
+    RAI_result <- RAI(agree_1_sample[,c(i,j)])
+    overall_agreement_matrix[i,j] <- RAI_result$Overall_agreement$value
+  }
+}
+rownames(overall_agreement_matrix) <- c(1:5)
+rownames(overall_agreement_matrix)[1] <- "Gpt4o"
+rownames(overall_agreement_matrix)[2] <- "Sonar pro"
+rownames(overall_agreement_matrix)[3] <- "Gemini 2.5 pro"
+rownames(overall_agreement_matrix)[4] <- "Marco"
+rownames(overall_agreement_matrix)[5] <- "João"
+colnames(overall_agreement_matrix) <- c(1:5)
+colnames(overall_agreement_matrix)[1] <- "Gpt4o"
+colnames(overall_agreement_matrix)[2] <- "Sonar pro"
+colnames(overall_agreement_matrix)[3] <- "Gemini 2.5 pro"
+colnames(overall_agreement_matrix)[4] <- "Marco"
+colnames(overall_agreement_matrix)[5] <- "João"
+melted_overall_agreement <- melt(overall_agreement_matrix)
+# Plot an heatmap of the overall agreement between different methods with numeric values on the tiles
+ggplot(data = melted_overall_agreement, aes(x=Var1, y=Var2, fill=value)) +
+  geom_tile(color = "white", linewidth = 0.5) +  # Adiciona bordas brancas
+  geom_text(aes(label=round(value, 2)), color="black", size = 3.5) +
+  scale_fill_gradient2(low = "#d73027", mid = "#ffffbf", high = "#1a9850", 
+                       midpoint = 0.8,
+                       name = "Agreement") +
+  labs(title = "Overall Agreement between IA Methods", 
+       x = "IA Method", y = "IA Method") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+### To assess reliability: Kappa 
 
 ```{r}
 lkappa(agree_1_IA[,c(1,2,3,4,5,6,7)])

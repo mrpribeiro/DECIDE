@@ -1,0 +1,33 @@
+2025-12-15 09:15:51 | INFO | 🚀 Início pipeline DECIDE Parte 2 + 3 (Multi-LLM independente)
+2025-12-15 09:15:51 | INFO | === LER INPUT ===
+2025-12-15 09:15:53 | INFO | Queries explícitas: 9
+2025-12-15 09:15:53 | INFO | [gpt4o] UniqueID=747
+2025-12-15 09:15:57 | INFO | [sonar_pro] UniqueID=747
+2025-12-15 09:16:04 | INFO | [gemini_2_5_pro] UniqueID=747
+2025-12-15 09:16:17 | INFO | [gpt4o] UniqueID=859
+2025-12-15 09:16:22 | INFO | [sonar_pro] UniqueID=859
+2025-12-15 09:16:26 | INFO | [gemini_2_5_pro] UniqueID=859
+2025-12-15 09:16:40 | INFO | [gpt4o] UniqueID=968
+2025-12-15 09:16:43 | INFO | [sonar_pro] UniqueID=968
+2025-12-15 09:16:45 | INFO | [gemini_2_5_pro] UniqueID=968
+2025-12-15 09:16:58 | INFO | [gpt4o] UniqueID=1249
+2025-12-15 09:17:01 | INFO | [sonar_pro] UniqueID=1249
+2025-12-15 09:17:03 | INFO | [gemini_2_5_pro] UniqueID=1249
+2025-12-15 09:17:08 | INFO | [gpt4o] UniqueID=1564
+2025-12-15 09:17:10 | INFO | [sonar_pro] UniqueID=1564
+2025-12-15 09:17:13 | INFO | [gemini_2_5_pro] UniqueID=1564
+2025-12-15 09:17:19 | INFO | [gpt4o] UniqueID=1622
+2025-12-15 09:17:20 | INFO | [sonar_pro] UniqueID=1622
+2025-12-15 09:17:22 | INFO | [gemini_2_5_pro] UniqueID=1622
+2025-12-15 09:17:30 | INFO | [gpt4o] UniqueID=1745
+2025-12-15 09:17:31 | INFO | [sonar_pro] UniqueID=1745
+2025-12-15 09:17:34 | INFO | [gemini_2_5_pro] UniqueID=1745
+2025-12-15 09:17:38 | INFO | [gpt4o] UniqueID=2009
+2025-12-15 09:17:40 | INFO | [sonar_pro] UniqueID=2009
+2025-12-15 09:17:42 | INFO | [gemini_2_5_pro] UniqueID=2009
+2025-12-15 09:17:48 | INFO | [gpt4o] UniqueID=2123
+2025-12-15 09:17:49 | INFO | [sonar_pro] UniqueID=2123
+2025-12-15 09:17:55 | INFO | [gemini_2_5_pro] UniqueID=2123
+2025-12-15 09:18:03 | INFO | Output UNIQUE guardado: PART2_3_FINAL_REST.xlsx
+2025-12-15 09:18:03 | INFO | Output FULL DATASET UNIQUE guardado: PART2_3_FINAL_unique.xlsx
+2025-12-15 09:18:03 | INFO | 🏁 Fim | Tempo total: 02:11

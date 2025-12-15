@@ -187,13 +187,13 @@ Os resultados da Parte 2 + 3 são posteriormente **integrados no dataset complet
 O resultado das queries classificadas na Parte 2 e 3:
 
 ```
-PART2_3_FINAL.xlsx
+PART2_3_queries_class.xlsx
 ```
 
 O output final da Parte 2 e 3 para queries únicas:
 
 ```
-PART2_3_FINAL_unique.xlsx
+PART2_3_final_unique.xlsx
 ```
 
 ---

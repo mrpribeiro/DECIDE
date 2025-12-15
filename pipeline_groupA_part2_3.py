@@ -25,27 +25,11 @@
 #       Rules == "YES"  OU  qualquer coluna LLM_run* == "YES"
 #
 # Outputs:
-#   1) PART2_3_unique_results.xlsx
+#   1) PART2_3_final_unique.xlsx
 #       - 1 linha por UniqueID (queries únicas)
-#       - colunas: UniqueID, Query, ARIA_Category, ARIA_Reasoning, GRADE_Question
 #
-#   2) PART2_3_full_dataset.xlsx
-#       - mesmas linhas e colunas do ficheiro de input
-#       - + colunas novas: ARIA_Category, ARIA_Reasoning, GRADE_Question
-#
-# Pré-requisitos:
-#   Ambiente Python (exemplo com mamba/conda):
-#
-#       mamba create -n decide_env python=3.10
-#       mamba activate decide_env
-#
-#   Pacotes:
-#
-#       pip install pandas python-dotenv openpyxl openai
-#
-#   Ficheiro .env na raiz:
-#
-#       OPENAI_API_KEY="A_TUA_CHAVE_AQUI"
+#   2) PART2_3_queries_class.xlsx
+#       - apenas queries que passaram no filtro de elegibilidade
 #
 # ==========================================================================
 
@@ -73,7 +57,8 @@ import google.generativeai as genai
 # ============================
 
 INPUT_FILE = "LLM_complete_classification_PERP_GPT_GEM.xlsx"
-OUTPUT_LONG_FILE = "PART2_3_FINAL.xlsx"
+OUTPUT_CLASS_FILE = "PART2_3_queries_class.xlsx"
+OUTPUT_UNIQUE_FILE = "PART2_3_final_unique.xlsx"
 
 SLEEP_BETWEEN_CALLS = 0.3
 GPT_MODEL = "gpt-4o"
@@ -392,9 +377,9 @@ def main():
 
     # Segurança adicional (caso algum NaN tenha escapado)
     df_resultados = df_resultados.fillna("N/A")
-    df_resultados.to_excel(OUTPUT_LONG_FILE, index=False)
+    df_resultados.to_excel(OUTPUT_CLASS_FILE, index=False)
 
-    logger.info(f"Output UNIQUE guardado: {OUTPUT_LONG_FILE}")
+    logger.info(f"Output all classified queries guardado: {OUTPUT_CLASS_FILE}")
 
     df_input_unique = pd.read_excel("LLM_class_unique_PERP_GPT_GEM.xlsx")
 
@@ -408,7 +393,8 @@ def main():
 
     df_full_unique.to_excel("PART2_3_FINAL_unique.xlsx", index=False)
 
-    logger.info("Output FULL DATASET UNIQUE guardado: PART2_3_FINAL_unique.xlsx")
+    logger.info(f"Output all unique queries guardado: {OUTPUT_UNIQUE_FILE}")
+
 # ============================
 # ENTRY POINT
 # ============================

@@ -1,175 +1,218 @@
 
 # 📘 **Pipeline DECIDE (Classificação de Queries com LLMs)**
 
-Este repositório contém a implementação da primeira parte do trabalho DECIDE, cujo objetivo é classificar queries do Google Trends segundo a metodologia apresentada no artigo AIM – Artificial Intelligence Supported Development of Health Guidelines (em particular o Supplement Box 2).
+Este repositório contém a pipeline desenvolvida no âmbito do projeto **DECIDE**, com o objetivo de **replicar e estender** a metodologia descrita no estudo **"[Artificial Intelligence-Supported Development of Health Guideline Questions](https://doi.org/10.7326/ANNALS-24-00363)"** para a análise em larga escala de queries, recorrendo a **Large Language Models (LLMs)**.
 
-O pipeline aplica **três classificações independentes por query**:
+A pipeline está organizada em **duas fases principais**:
 
-1. **Run 1 – Classificação LLM (Prompt do Supplement Box 2A)**
-2. **Run 2 – Classificação LLM com batches reorganizados (para replicar o método do artigo)**
-3. **Classificação baseada em regras sintáticas (Supplement Box 2B expandido)**
-
-As duas primeiras utilizam um modelo LLM e a terceira utiliza heurísticas linguísticas.
+* **Parte 1** – Identificação de queries que transmitem uma pergunta explícita
+* **Parte 2 + 3** – Triagem ARIA e formulação de perguntas de guideline em formato GRADE
 
 ---
 
-## 🧩 **1. Ambiente – Instalação**
+## 📂 **Estrutura do Projeto**
 
-Recomenda-se criar um ambiente dedicado:
-
-```bash
-mamba create -n decide_env python=3.10
-mamba activate decide_env
 ```
+agreement/                      Validação e processamento agreement
+archived_results/               Resultados de runs anteriores ou descartados
+logs/                           Logs detalhados de execução
 
-Instalar dependências:
+results_part1/                  Outputs finais da Parte 1
+results_part2_3/                Outputs finais da Parte 2 + 3
+xlsx_intermed/                  Ficheiros intermédios (debug, retries, merges)
 
-```bash
-pip install groq pandas python-dotenv openpyxl perplexityai
+pipeline_groupA_part1.py        Pipeline da Parte 1 (classificação de queries)
+pipeline_groupA_part2_3.py      Pipeline da Parte 2 + 3 (ARIA + GRADE)
+
+queries_middle_east.xlsx        Dataset de input inicial
+README.md
+.env
+.gitignore
 ```
+---
+
+## 🔹 Parte 1 — Identificação de Queries com Pergunta Explícita
+
+A Parte 1 tem como objetivo identificar se uma query **transmite explicitamente uma pergunta**, seguindo a metodologia descrita no **Supplement Box 2A e 2B** do artigo.
+
+### ✔ Normalização e deduplicação
+
+* Normalização Unicode e limpeza de whitespace
+* Remoção de duplicados por texto
+* Atribuição de um `UniqueID` estável a cada query única
 
 ---
 
-## 🔑 **2. API Key**
+### ✔ Classificação baseada em LLMs
 
-Criar um ficheiro `.env` na raiz do projeto contendo:
+Cada query única é classificada usando **três modelos**, com **duas runs independentes por modelo**:
 
-```
-PERPLEXITY_API_KEY=INSERIR_AQUI_A_CHAVE
-```
+* **Perplexity (sonar)**
+* **OpenAI GPT-4o-mini**
+* **Gemini 2.5 Flash**
 
-Nota: Inicialmente testou-se Groq API por ser gratuita, mas devido ao limite diário de tokens, o pipeline foi migrado para Perplexity API, especificamente o modelo sonar, utilizado como LLM de classificação.
+Características principais:
 
----
-
-## 📂 **3. Estrutura do Projeto**
-
-```
-📁 DECIDE/
- ├── pipeline_groupA.py           # pipeline completo (versão final)
- ├── pipeline_groupA_teste.ipynb  # notebook para testes passo a passo
- ├── queries_middle_east.xlsx     # dataset original
- ├── df_unique.xlsx               # queries únicas com UniqueID
- ├── df_run1.xlsx                 # classificações da Run 1
- ├── df_run2.xlsx                 # classificações da Run 2
- ├── df_rules.xlsx                # classificações por regras
- ├── queries_classificadas_COMPLETO.xlsx   # output final
- ├── pipeline_run_YYYY-MM-DD.log  # logs gerados automaticamente
- └── README.md                    # este documento
-
-```
-
----
-
-## ▶️ **4. Como correr o pipeline**
-
-### **Opção A — Script Python**
-
-```bash
-python3 pipeline_decide.py
-```
-
-### **Opção B — Notebook**
-
-Abrir:
-
-```
-pipeline_decide.ipynb
-```
-
-e executar célula a célula para testar e ajustar parâmetros.
-
----
-
-## 🔍 **5. Passos realizados pelo pipeline**
-
-### ✔ **1) Ler o ficheiro `.xlsx`**
-
-* remoção de linhas vazias
-* normalização Unicode e limpeza do texto
-
----
-
-### ✔ **2) Deduplicação**
-
-* criação de um `UniqueID` por query única
-* evita classificações repetidas
-* garante merges seguros
-
----
-
-### ✔ **3) Run 1 — Classificação LLM**
-
-* modelo usado: **sonar (Perplexity)**
-* batches de 50 queries
-* prompt igual ao do Supplement Box 2A (adaptado e extendido)
-* output forçado a JSON
-* parsing robusto para lidar com respostas não formatadas
-
----
-
-### ✔ **4) Run 2 — Classificação LLM com batches diferentes**
+* Processamento em **batches de 50 queries**
+* Prompt baseado no **Supplement Box 2A**, adaptado e estendido
+* Output **forçado a JSON**
+* Parsing robusto para lidar com respostas parcialmente mal-formatadas
+* Logs e exportação de respostas falhadas para ficheiros de debug
 
 Para replicar fielmente o método do artigo:
 
-> “Different query combinations were used in each round.”
+> *“Different query combinations were used in each round.”*
 
-* queries embaralhadas com `.sample(frac=1)`
-* batches novos → contexto diferente
+As queries são:
+
+* embaralhadas com `.sample(frac=1)`
+* reagrupadas em batches diferentes em cada run
 
 ---
 
-### ✔ **5) Classificação por regras sintáticas**
+### ✔ Classificação por regras linguísticas (determinística)
 
-Baseada no Supplement Box 2B:
+Em paralelo, é aplicada uma classificação baseada em regras multilingues, inspirada no **Supplement Box 2B**, incluindo:
 
-* identificação de palavras interrogativas (EN, ES, PT, FR, DE, NL, RU, AR, FA, TR)
+* palavras interrogativas (EN, ES, PT, FR, DE, NL, RU, AR, FA, TR)
 * padrões sintáticos
 * partículas interrogativas
-* detecção de pedidos implícitos
-* método totalmente determinístico
+* deteção de pedidos implícitos
+
+Prompt usado (**ChatGPT 5.1**):
+* [https://chatgpt.com/share 6931b30c-4208-8004-9e29-98037d1dc763](https://chatgpt.com/share/6931b30c-4208-8004-9e29-98037d1dc763)
 
 ---
 
-### ✔ **6) Merge final**
+### ✔ Merge final da Parte 1
 
-Merge realizado por `UniqueID`, garantindo:
+Os resultados são integrados usando o `UniqueID`, garantindo:
 
 * consistência entre runs
-* tolerância a alterações mínimas do texto
+* tolerância a pequenas variações de texto
 * ausência de conflitos
 
-O ficheiro final:
+O output final da Parte 1 completo é:
 
 ```
-queries_classificadas_llm.xlsx
+LLM_complete_classification_PERP_GPT_GEM.xlsx
 ```
 
-contém:
+que contém:
 
 * Query
 * UniqueID
-* Classificação Run 1
-* Classificação Run 2
-* Classificação por Regras
+* Classificações LLM (runs 1 e 2)
+* Classificação por regras
+* Colunas originais do dataset
 
-E mantém as colunas originais do dataset.
+O output final da Parte 1 apenas com queriess unicas é:
+
+```
+LLM_class_unique_PERP_GPT_GEM.xlsx
+```
 
 ---
 
-## 📊 **7. Limitações e Notas**
+## 🔹 Parte 2 + 3 — Triagem ARIA e Perguntas GRADE
 
-⚠️ Limite da Perplexity API (PRO)
+A Parte 2 + 3 parte **exclusivamente do output da Parte 1**.
 
-O modelo sonar funciona bem, mas:
-* se o utilizador não tiver plano PRO, há limites fortes
-* cada batch consome tokens rapidamente
-* recomendamos correr apenas uma vez sobre o dataset final
+### Critério de elegibilidade
 
-⚠️ JSON pode falhar quando o modelo inclui texto extra
+Uma query é processada se **pelo menos um método da Parte 1** indicar que transmite uma pergunta explícita:
 
-O código possui:
-* mecanismo de fallback
-* logger + exportação de respostas falhadas para failed_batch.txt
-* Isto permite depurar problemas sem interromper a execução.
+* `Rules == YES`
+  **ou**
+* qualquer coluna `LLM_run* == YES`
 
+Este critério privilegia **sensibilidade máxima**.
+
+---
+
+### ✔ Parte 2 — Classificação ARIA
+
+Cada query elegível é processada **independentemente** por:
+
+* GPT-4o
+* Perplexity Sonar-Pro
+* Gemini-2.5-Pro
+
+Cada modelo classifica a query como:
+
+* **Unrelated**
+* **Background**
+* **Foreground**
+
+Acompanhado de uma justificação textual para a sua classificação.
+
+Os prompts utilizados correspondem integralmente aos prompts longos definidos a priori.
+
+---
+
+### ✔ Parte 3 — Formulação de Perguntas GRADE
+
+Para queries classificadas como **Foreground**, cada LLM gera **independentemente** uma pergunta estruturada no formato GRADE:
+
+```
+Should [Intervention] vs [Comparator] be used in [Population]?
+```
+
+Não é aplicado qualquer mecanismo de consenso ou voting:
+
+* cada LLM é tratado como **pipeline analítico independente**
+* divergências são consideradas objeto de análise
+
+Quando a intervenção é demasiado vaga, o output é explicitamente:
+
+```
+Error: Intervention too vague.
+```
+
+---
+
+## 📊 Outputs
+
+* Resultados em formato **wide** (uma linha por `UniqueID`, colunas por modelo)
+* Valores explícitos `N/A` distinguem claramente:
+
+  * queries não processadas
+  * queries não aplicáveis
+
+Os resultados da Parte 2 + 3 são posteriormente **integrados no dataset completo da Parte 1** através de merge por `UniqueID`.
+
+O resultado das queries classificadas na Parte 2 e 3:
+
+```
+PART2_3_queries_class.xlsx
+```
+
+O output final da Parte 2 e 3 para queries únicas:
+
+```
+PART2_3_final_unique.xlsx
+```
+
+---
+
+## ⚠️ Limitações e Notas
+
+### Robustez do parsing
+
+* Outputs JSON podem falhar quando o modelo adiciona texto extra
+* O código inclui:
+
+  * mecanismos de fallback
+  * logging detalhado
+  * exportação de respostas problemáticas
+* A execução nunca é interrompida por estas falhas
+
+---
+
+## 🔁 Reprodutibilidade
+
+* A pipeline é determinística dado o mesmo input e respostas das APIs
+* Logs, ficheiros intermédios e resultados arquivados garantem rastreabilidade total
+* O uso de `UniqueID` assegura consistência entre fases
+
+---

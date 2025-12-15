@@ -30,14 +30,15 @@
 #        - Gemini 2.5 Flash    → colunas LLM_run1_Gemini     / LLM_run2_Gemini
 #   5) aplica regras multilingues baseadas no Supplement Box 2B (expandido)
 #   6) faz merge usando UniqueID (evitando problemas de inconsistências)
-#   7) exporta: queries_classificadas_COMPLETO.xlsx
+#   7) exporta: LLM_complete_classification_PERP_GPT_GEM.xlsx
 
 # =======================
 # FLAGS PARA CADA LLM
 # =======================
-USE_PERPLEXITY = True  # muda para True se quiseres usar Perplexity (sonar)
-USE_GPT = True        # muda para True se quiseres usar OpenAI GPT-4o-mini
-USE_GEMINI = True     # muda para True se quiseres usar Gemini 2.5 Flash
+# Mudar para False para desativar um LLM específico
+USE_PERPLEXITY = True
+USE_GPT = True
+USE_GEMINI = True
 
 # =======================
 # IMPORTS
@@ -520,12 +521,6 @@ def main():
     logger.info(f"Queries únicas: {len(df_unique)}")
     df_unique.to_excel("df_unique.xlsx", index=False)  # TEMP
 
-    # # Criar uma amostra aleatória de n linhas (random_state para reprodutibilidade = seed, gera sempre a mesma amostra)
-    # n = 246
-    # df_sample = df_unique.sample(n=n, random_state=42)
-    # df_sample.to_excel("df_sample.xlsx", index=False)
-    # logger.info(f"Criada amostra aleatória de {n} queries, guardada em df_sample.xlsx")
-
     run_dfs = []
 
     # -----------------------
@@ -594,18 +589,6 @@ def main():
     # -----------------------
     logger.info("=== 10) MERGE FINAL ===")
     df_final = merge_results(df, df_unique, run_dfs)
-
-    # # --- COLUNAS FIXAS WANTED ---
-    # base_cols = ["UniqueID", "Query", "Rules"]
-
-    # # --- DETECTAR TODAS AS COLUNAS DE RUN (qualquer modelo) ---
-    # llm_cols = [c for c in df_final.columns if c.startswith("LLM_run")]
-
-    # # --- COLUNAS FINAIS A EXPORTAR ---
-    # desired_cols = base_cols + llm_cols
-
-    # # --- FILTRAR DATAFRAME ---
-    # df_final = df_final[[c for c in desired_cols if c in df_final.columns]]
 
     logger.info(f"Merge final concluído: {len(df_final)} linhas totais.")
 

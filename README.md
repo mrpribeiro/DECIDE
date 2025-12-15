@@ -1,7 +1,7 @@
 
 # 📘 **Pipeline DECIDE (Classificação de Queries com LLMs)**
 
-Este repositório contém a pipeline desenvolvida no âmbito do projeto **DECIDE**, com o objetivo de **replicar e estender** a metodologia descrita no estudo AIM (Artificial Intelligence Supported Development of Health Guidelines) para a análise em larga escala de queries, recorrendo a **Large Language Models (LLMs)**.
+Este repositório contém a pipeline desenvolvida no âmbito do projeto **DECIDE**, com o objetivo de **replicar e estender** a metodologia descrita no estudo **"[Artificial Intelligence-Supported Development of Health Guideline Questions](https://doi.org/10.7326/ANNALS-24-00363)"** para a análise em larga escala de queries, recorrendo a **Large Language Models (LLMs)**.
 
 A pipeline está organizada em **duas fases principais**:
 
